@@ -10,6 +10,7 @@ import EngagementsSection from '@/components/sections/EngagementsSection';
 import FaqSection from '@/components/sections/FaqSection';
 import ContactSection from '@/components/sections/ContactSection';
 
+// Only what differs from the root layout — no duplicated OG/Twitter blocks.
 export const metadata = {
   title: 'Managed Software Development Services India — Built, Hosted & Run by DIV',
   description:

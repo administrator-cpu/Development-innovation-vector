@@ -1,7 +1,10 @@
 import Image from 'next/image';
-import PillButton from '@/components/ui/PillButton';
+import BookingButton from '@/components/booking/BookingButton';
 
-
+/**
+ * The hero background is the LCP element, so it uses next/image with
+ * priority + sizes="100vw" and fill, and the decorative tint sits above it.
+ */
 export default function HeroSection({ navbar }) {
   return (
     <section id="top" className="relative p-3 sm:p-4">
@@ -35,9 +38,9 @@ export default function HeroSection({ navbar }) {
             team in India.
           </p>
           <div className="animate-rise mt-8 flex flex-wrap justify-center gap-2.5 [animation-delay:0.3s]">
-            <PillButton href="#contact" ariaLabel="Start a conversation about your software">
+            <BookingButton source="hero" ariaLabel="Start a conversation about your software">
               Start a conversation
-            </PillButton>
+            </BookingButton>
           </div>
         </div>
 

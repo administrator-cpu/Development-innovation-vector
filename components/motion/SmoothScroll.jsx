@@ -3,6 +3,14 @@
 import { useEffect } from 'react';
 import Lenis from 'lenis';
 
+/**
+ * Global smooth scroll. Mounted once in the root layout.
+ *
+ * - Respects prefers-reduced-motion (bails out entirely).
+ * - Anchors (#contact etc.) are intercepted so Lenis animates them
+ *   instead of the browser's instant jump.
+ * - Exposes window.lenis for any component that needs scrollTo/stop.
+ */
 export default function SmoothScroll() {
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;

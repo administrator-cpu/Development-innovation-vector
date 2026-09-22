@@ -4,7 +4,6 @@ const tones = {
   light: { shell: 'bg-white text-ink', dot: 'bg-ink text-white' },
   dark: { shell: 'bg-ink text-white', dot: 'bg-white text-ink' },
   navy: { shell: 'bg-navy text-white', dot: 'bg-lime text-ink' },
-  whatsapp: { shell: 'bg-[#25D366] text-white', dot: 'bg-white text-[#25D366]' },
 };
 
 /**

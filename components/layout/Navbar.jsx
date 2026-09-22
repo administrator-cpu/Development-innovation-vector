@@ -2,15 +2,22 @@
 
 import { useState } from 'react';
 import { navLinks } from '@/lib/content';
+import { useBooking } from '@/components/booking/BookingProvider';
 
+/**
+ * Client Component only because of the mobile disclosure menu.
+ * The glass centre rail is the design's signature: translucent white fill,
+ * 16px backdrop blur, saturated, hairline border, fully pill-shaped.
+ */
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const { openBooking } = useBooking();
 
   return (
     <header className="relative z-30 px-4 py-4 sm:px-6 sm:py-5">
       <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
-        <a href="#top" className="flex flex-none items-center gap-2.5 text-white h-[35px] w-[80px]" aria-label="DIV — home">
-          <img src="/core/Logo.webp" alt="DIV" width={18} height={19} className="block h-full w-full object-cover" />
+        <a href="#top" className="flex flex-none items-center gap-2.5 text-white h-[40px] w-[100px]" aria-label="DIV — home">
+          <img src="/core/Logo.webp" alt="DIV" width={58} height={19} className="block h-full object-cover w-full" />
         </a>
 
         <nav
@@ -29,12 +36,14 @@ export default function Navbar() {
         </nav>
 
         <div className="flex flex-none items-center gap-2">
-          <a
-            href="#contact"
-            className="inline-flex items-center rounded-full bg-white px-[22px] py-[11px] text-[13.5px] font-medium whitespace-nowrap text-ink transition-transform duration-500 ease-[cubic-bezier(.16,1,.3,1)] hover:-translate-y-0.5"
+          <button
+            type="button"
+            onClick={() => openBooking('navbar')}
+            aria-haspopup="dialog"
+            className="inline-flex cursor-pointer items-center rounded-full bg-white px-[22px] py-[11px] text-[13.5px] font-medium whitespace-nowrap text-ink transition-transform duration-500 ease-[cubic-bezier(.16,1,.3,1)] hover:-translate-y-0.5"
           >
             Book a call
-          </a>
+          </button>
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}

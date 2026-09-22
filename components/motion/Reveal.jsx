@@ -10,15 +10,36 @@ const DIRECTIONS = {
   none: { x: 0, y: 0 },
 };
 
+/**
+ * Scroll reveal. Wrap any server-rendered block:
+ *
+ *   <Reveal><h2 …/></Reveal>
+ *   <Reveal as="article" delay={0.08} from="left">…</Reveal>
+ *
+ * Children stay Server Components — only the wrapper is client.
+ * Content is visible with no JS / reduced motion (opacity animates from 1).
+ */
 export default function Reveal({
-  children, as = 'div', from = 'up', delay = 0,
-  duration = 0.7, amount = 0.3, className, ...rest
+  children,
+  as = 'div',
+  from = 'up',
+  delay = 0,
+  duration = 0.7,
+  amount = 0.3,
+  className,
+  ...rest
 }) {
   const reduced = useReducedMotion();
   const Tag = motion[as] ?? motion.div;
   const offset = DIRECTIONS[from] ?? DIRECTIONS.up;
 
-  if (reduced) return <Tag className={className} {...rest}>{children}</Tag>;
+  if (reduced) {
+    return (
+      <Tag className={className} {...rest}>
+        {children}
+      </Tag>
+    );
+  }
 
   return (
     <Tag

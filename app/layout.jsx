@@ -2,10 +2,11 @@ import './globals.css';
 import { instrumentSans, instrumentSerif, plexMono } from './fonts';
 import { siteConfig } from '@/lib/siteConfig';
 import SiteFooter from '@/components/layout/SiteFooter';
+import SmoothScroll from '@/components/motion/SmoothScroll';
+import BookingProvider from '@/components/booking/BookingProvider';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/next';
 import { GoogleAnalytics } from '@next/third-parties/google';
-import SmoothScroll from '@/components/motion/SmoothScroll';
 
 export const metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -80,17 +81,24 @@ export default function RootLayout({ children }) {
       className={`${instrumentSans.variable} ${instrumentSerif.variable} ${plexMono.variable} antialiased`}
     >
       <head>
+        {/* Cuts ~100–200ms off the first analytics/GA connection without blocking render. */}
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
       </head>
-       <body suppressHydrationWarning>
-        <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-full focus:bg-ink focus:px-5 focus:py-3 focus:text-sm focus:text-white">
+      <body suppressHydrationWarning>
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-full focus:bg-ink focus:px-5 focus:py-3 focus:text-sm focus:text-white"
+        >
           Skip to main content
         </a>
 
-         <SmoothScroll />
-        {children}
-        <SiteFooter />
+        
+        <SmoothScroll />
+        <BookingProvider>
+          {children}
+          <SiteFooter />
+        </BookingProvider>
 
         <SpeedInsights />
         <Analytics />

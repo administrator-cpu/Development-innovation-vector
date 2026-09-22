@@ -1,6 +1,10 @@
 import { siteConfig } from '@/lib/siteConfig';
 import { products, faq } from '@/lib/content';
 
+/**
+ * Organization + Service JSON-LD. Rendered from a Server Component, so the
+ * markup ships in the initial HTML where crawlers read it without executing JS.
+ */
 export default function StructuredData() {
   const organization = {
     '@type': 'Organization',

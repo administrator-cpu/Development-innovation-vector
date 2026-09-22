@@ -5,9 +5,9 @@ export default function SiteFooter() {
     <footer className="mx-auto max-w-[1320px] px-5 pt-12 pb-8 sm:px-10 sm:pt-20 sm:pb-12">
       <div className="grid grid-cols-1 gap-6 border-b border-line pb-8 sm:grid-cols-2 sm:gap-11 lg:grid-cols-4">
         <div className="min-w-0">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <a href="#top" className="flex flex-none items-center gap-2.5 text-white h-[35px] w-[80px]" aria-label="DIV">
-          <img src="/core/Logo.webp" alt="DIV" width={55} height={18} className="mb-3 block h-full w-full object-cover" /></a>
+          <div className="h-[40px] w-[100px]">
+            <img src="/core/Logo.webp" alt="DIV" width={58} height={19} className="block h-full object-cover w-full" />
+          </div>
           <p className="max-w-[26ch] text-[13px] leading-[1.55] text-muted">
             Built, hosted and monitored by one team in India.
           </p>
