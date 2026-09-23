@@ -10,8 +10,8 @@ export default function HeroSection({ navbar }) {
     <section id="top" className="relative p-3 sm:p-4">
       <div className="relative flex min-h-[560px] flex-col overflow-hidden rounded-[20px] sm:rounded-[26px] lg:min-h-[88vh]">
         <Image
-          src="/images/hero.jpg"
-          alt="Dusk landscape with a single figure on the horizon"
+          src="/images/hero-managed-software-development-india.jpg"
+          alt="Lone figure on a hilltop at dusk — DIV builds and runs your software for years"
           fill
           priority
           fetchPriority="high"

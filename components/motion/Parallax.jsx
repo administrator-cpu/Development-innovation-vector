@@ -3,7 +3,10 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react';
 
-
+/**
+ * Vertical parallax for imagery. Give the parent `overflow:hidden` and let the
+ * child be taller than its frame (e.g. inset -12% on the image).
+ */
 export default function Parallax({ children, distance = 60, className, ...rest }) {
   const ref = useRef(null);
   const reduced = useReducedMotion();

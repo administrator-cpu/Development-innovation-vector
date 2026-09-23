@@ -82,3 +82,20 @@ public/images/               see below
   controls, `aria-expanded`/`aria-controls` on the mobile menu and FAQ, `aria-sort` on table
   headers, `aria-pressed` on filter chips, `role="img"` + labels on data graphics.
 - Body copy on dark grounds is white at ≥0.9 alpha over a ≥0.42 scrim to hold 4.5:1.
+
+
+## Inner pages (added)
+
+| Route | Source |
+|---|---|
+| /services | app/services/page.jsx |
+| /cloud-native-deployments, /api-backend-development, /microservices-architecture, /database-integration | app/[service]/page.jsx + lib/services.js |
+| /work, /work/[slug] | app/work + lib/caseStudies.js |
+| /about | app/about/page.jsx |
+| /contact | app/contact/page.jsx + components/contact/ContactForm.jsx + app/api/contact/route.js |
+| /sla, /privacy, /terms | app/{sla,privacy,terms}/page.jsx + lib/legal.js |
+
+Before launch:
+- **Legal review.** lib/legal.js is a draft for Indian law (DPDP Act 2023, IT Act 2000). Set `draft: false` after counsel signs off (the draft notice only shows in dev).
+- **N.A.P.** lib/siteConfig.js must match the Google Business Profile exactly (address format, phone format).
+- **Founder portrait:** public/images/team/harsh-jha.jpg, then swap the initials block in app/about/page.jsx.

@@ -4,17 +4,25 @@ import { siteConfig } from '@/lib/siteConfig';
 import SiteFooter from '@/components/layout/SiteFooter';
 import SmoothScroll from '@/components/motion/SmoothScroll';
 import BookingProvider from '@/components/booking/BookingProvider';
+import { SiteSchema } from '@/components/seo/StructuredData';
+import { clampDesc, ogImageUrl } from '@/lib/seo';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/next';
 import { GoogleAnalytics } from '@next/third-parties/google';
 
+const DEFAULT_TITLE = 'Managed Software Development Company in India | DIV';
+const DEFAULT_DESC = clampDesc(siteConfig.description);
+const bing = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION;
+
+// No canonical here on purpose: a layout-level canonical would be inherited by
+// every page that forgets its own (404s included). Each page sets its own.
 export const metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: 'Managed Software Development Services India | DIV',
+    default: DEFAULT_TITLE,
     template: '%s | DIV',
   },
-  description: siteConfig.description,
+  description: DEFAULT_DESC,
   applicationName: siteConfig.shortName,
   keywords: siteConfig.keywords,
   authors: [{ name: siteConfig.name, url: siteConfig.url }],
@@ -22,7 +30,6 @@ export const metadata = {
   publisher: siteConfig.name,
   category: 'technology',
   formatDetection: { telephone: false, email: false, address: false },
-  alternates: { canonical: '/' },
   robots: {
     index: true,
     follow: true,
@@ -34,17 +41,20 @@ export const metadata = {
       'max-snippet': -1,
     },
   },
-  verification: { google: siteConfig.googleSiteVerification },
+  verification: {
+    google: siteConfig.googleSiteVerification,
+    ...(bing ? { other: { 'msvalidate.01': bing } } : {}),
+  },
   openGraph: {
     type: 'website',
     url: siteConfig.url,
     siteName: siteConfig.name,
     locale: siteConfig.locale,
-    title: 'Managed Software Development Services India | DIV',
-    description: siteConfig.description,
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESC,
     images: [
       {
-        url: siteConfig.ogImage,
+        url: ogImageUrl(),
         width: 1200,
         height: 630,
         alt: 'DIV — managed software development and IT services in India',
@@ -53,18 +63,12 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Managed Software Development Services India | DIV',
-    description: siteConfig.description,
-    images: [siteConfig.ogImage],
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESC,
+    images: [ogImageUrl()],
   },
-  icons: {
-    icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/icon.svg', type: 'image/svg+xml' },
-    ],
-    apple: '/apple-touch-icon.png',
-  },
-  manifest: '/manifest.webmanifest',
+  // Favicon, apple-touch-icon and manifest links come from app/icon.jsx,
+  // app/apple-icon.jsx and app/manifest.js automatically.
 };
 
 export const viewport = {
@@ -86,6 +90,7 @@ export default function RootLayout({ children }) {
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
       </head>
       <body suppressHydrationWarning>
+        <SiteSchema />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-full focus:bg-ink focus:px-5 focus:py-3 focus:text-sm focus:text-white"
@@ -93,7 +98,9 @@ export default function RootLayout({ children }) {
           Skip to main content
         </a>
 
-        
+        {/* Navbar is NOT global: it is white-on-dark and belongs inside the hero
+            (rendered by HeroSection). Pages without a dark hero should render
+            their own header variant. */}
         <SmoothScroll />
         <BookingProvider>
           {children}

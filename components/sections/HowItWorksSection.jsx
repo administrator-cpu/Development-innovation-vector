@@ -32,9 +32,12 @@ export default function HowItWorksSection() {
         ))}
       </ol>
 
-      <div className="mt-8 flex justify-center">
+      <div className="mt-8 flex flex-wrap justify-center gap-2.5">
         <PillButton href="#platform" tone="dark" className="text-sm">
           See the platform
+        </PillButton>
+        <PillButton href="/services" className="text-sm">
+          Explore our services
         </PillButton>
       </div>
     </section>

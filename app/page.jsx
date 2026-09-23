@@ -9,19 +9,16 @@ import ProductsSection from '@/components/sections/ProductsSection';
 import EngagementsSection from '@/components/sections/EngagementsSection';
 import FaqSection from '@/components/sections/FaqSection';
 import ContactSection from '@/components/sections/ContactSection';
+import { pageMetadata } from '@/lib/seo';
 
-// Only what differs from the root layout — no duplicated OG/Twitter blocks.
-export const metadata = {
-  title: 'Managed Software Development Services India — Built, Hosted & Run by DIV',
+export const metadata = pageMetadata({
+  title: { absolute: 'Managed Software Development Company in India | DIV' },
   description:
-    'DIV is an end-to-end managed software development company in India: custom CRM, billing, support, RADIUS and mobile systems designed, built, hosted in our own data centre and monitored 24/7 by the engineers who wrote them.',
-  alternates: { canonical: '/' },
-  openGraph: {
-    title: 'Managed Software Development Services India — DIV',
-    description:
-      'One team in India designs, builds, hosts and monitors your software — CRM, billing, support, networks, apps and sites — for years after launch.',
-  },
-};
+    'DIV builds, hosts and runs custom CRM, billing, support and mobile software for Indian businesses — one engineering team, a 99.9% uptime SLA and 24/7 support.',
+  path: '/',
+  ogTitle: 'Managed software development in India',
+  ogSub: 'We build your software, then we run it — for years.',
+});
 
 export default function HomePage() {
   return (

@@ -16,8 +16,8 @@ export default function EngagementsSection() {
 
       <div className="relative overflow-hidden rounded-[20px] bg-[linear-gradient(165deg,#5A6450_0%,#38412F_60%,#232A20_100%)] px-5 py-8 sm:rounded-[26px] sm:px-12 sm:py-14">
         <Image
-          src="/images/engagements-hills.jpg"
-          alt="Pale sky over distant hills"
+          src="/images/software-development-engagement-plans-background.jpg"
+          alt="Pale sky over distant hills behind DIV’s software engagement plans"
           fill
           sizes="(max-width: 1320px) 100vw, 1320px"
           className="object-cover"

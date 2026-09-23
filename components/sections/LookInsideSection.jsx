@@ -202,8 +202,8 @@ export default function LookInsideSection() {
                   })}
                 </div>
 
-                <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl border border-[#EFECE5] bg-white">
-                  <div role="table" aria-label={shot.tableTitle}>
+                <div className="flex min-h-0 flex-1 flex-col overflow-x-auto overflow-y-hidden overscroll-x-contain rounded-xl border border-[#EFECE5] bg-white" data-lenis-prevent>
+                  <div role="table" aria-label={shot.tableTitle} className="min-w-[600px]">
                     <div
                       role="row"
                       style={{ gridTemplateColumns: shot.grid }}
@@ -275,8 +275,8 @@ export default function LookInsideSection() {
 
       <div className="relative mt-6 flex flex-wrap items-center gap-8 overflow-hidden rounded-[20px] bg-[linear-gradient(120deg,#363C45_0%,#1D2026_70%)] p-6 sm:rounded-[26px] sm:p-12">
         <Image
-          src="/images/mobile-dusk.jpg"
-          alt="Dusk sky over an open field"
+          src="/images/mobile-app-development-india-background.jpg"
+          alt="Dusk sky over an open field behind DIV’s customer mobile app screens"
           fill
           sizes="(max-width: 1320px) 100vw, 1320px"
           className="object-cover"
@@ -295,16 +295,16 @@ export default function LookInsideSection() {
         </div>
         <div className="relative z-10 flex min-w-0 flex-1 basis-[340px] justify-center gap-4">
           <Image
-            src="/images/samadhan-app.png"
-            alt="Samadhan customer app — ticket detail with SLA clock"
+            src="/images/shots/samadhan-helpdesk-app-ticket-detail-sla.png"
+            alt="Samadhan helpdesk mobile app showing a support ticket with its SLA countdown"
             width={360}
             height={740}
             sizes="180px"
             className="w-full max-w-[180px] -rotate-2 rounded-3xl border border-white/30 shadow-[0_44px_70px_-46px_rgba(0,0,0,0.8)]"
           />
           <Image
-            src="/images/samadhan-app-list.png"
-            alt="Samadhan customer app — ticket list"
+            src="/images/shots/samadhan-helpdesk-app-ticket-list.png"
+            alt="Samadhan helpdesk mobile app showing a customer’s list of support tickets"
             width={360}
             height={740}
             sizes="180px"

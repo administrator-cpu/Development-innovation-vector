@@ -54,7 +54,6 @@ export async function POST(request) {
   const booking = {
     name,
     email,
-    // cc: siteConfig.email,
     phone,
     date,
     time,

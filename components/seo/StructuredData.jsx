@@ -1,11 +1,15 @@
 import { siteConfig } from '@/lib/siteConfig';
 import { products, faq } from '@/lib/content';
 
+const ld = (data) => (
+  <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, '\\u003c') }} />
+);
+
 /**
- * Organization + Service JSON-LD. Rendered from a Server Component, so the
- * markup ships in the initial HTML where crawlers read it without executing JS.
+ * Organization + WebSite — rendered on EVERY page from the root layout so the
+ * `#organization` / `#website` @ids that other schemas reference always resolve.
  */
-export default function StructuredData() {
+export function SiteSchema() {
   const organization = {
     '@type': 'Organization',
     '@id': `${siteConfig.url}/#organization`,
@@ -13,7 +17,10 @@ export default function StructuredData() {
     legalName: siteConfig.legalName,
     alternateName: siteConfig.shortName,
     url: siteConfig.url,
-    logo: `${siteConfig.url}/images/div-logo.png`,
+    logo: { '@type': 'ImageObject', url: `${siteConfig.url}${siteConfig.logo}` },
+    image: `${siteConfig.url}${siteConfig.ogImage}`,
+    foundingDate: String(siteConfig.foundingYear),
+    founder: { '@type': 'Person', name: 'Ayush Pathak' },
     description: siteConfig.description,
     email: siteConfig.email,
     telephone: siteConfig.phone,
@@ -51,6 +58,20 @@ export default function StructuredData() {
     ],
   };
 
+  const website = {
+    '@type': 'WebSite',
+    '@id': `${siteConfig.url}/#website`,
+    url: siteConfig.url,
+    name: siteConfig.name,
+    inLanguage: 'en-IN',
+    publisher: { '@id': `${siteConfig.url}/#organization` },
+  };
+
+  return ld({ '@context': 'https://schema.org', '@graph': [organization, website] });
+}
+
+/** Home page only: Service + WebPage + FAQPage. */
+export default function StructuredData() {
   const service = {
     '@type': 'Service',
     '@id': `${siteConfig.url}/#managed-software-development`,
@@ -66,7 +87,7 @@ export default function StructuredData() {
     audience: { '@type': 'BusinessAudience', audienceType: 'Enterprise and mid-market businesses' },
     availableChannel: {
       '@type': 'ServiceChannel',
-      serviceUrl: `${siteConfig.url}/#contact`,
+      serviceUrl: `${siteConfig.url}/contact`,
       servicePhone: siteConfig.phone,
     },
     hasOfferCatalog: {
@@ -77,15 +98,6 @@ export default function StructuredData() {
         itemOffered: { '@type': 'Service', name: product.name, description: product.line },
       })),
     },
-  };
-
-  const website = {
-    '@type': 'WebSite',
-    '@id': `${siteConfig.url}/#website`,
-    url: siteConfig.url,
-    name: siteConfig.name,
-    inLanguage: 'en-IN',
-    publisher: { '@id': `${siteConfig.url}/#organization` },
   };
 
   const faqPage = {
@@ -102,7 +114,7 @@ export default function StructuredData() {
     '@type': 'WebPage',
     '@id': `${siteConfig.url}/#webpage`,
     url: siteConfig.url,
-    name: 'Managed Software Development Services India | DIV',
+    name: 'Managed Software Development Company in India | DIV',
     description: siteConfig.description,
     inLanguage: 'en-IN',
     isPartOf: { '@id': `${siteConfig.url}/#website` },
@@ -110,15 +122,5 @@ export default function StructuredData() {
     primaryImageOfPage: { '@type': 'ImageObject', url: `${siteConfig.url}${siteConfig.ogImage}` },
   };
 
-  const graph = {
-    '@context': 'https://schema.org',
-    '@graph': [organization, service, website, webPage, faqPage],
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(graph) }}
-    />
-  );
+  return ld({ '@context': 'https://schema.org', '@graph': [service, webPage, faqPage] });
 }

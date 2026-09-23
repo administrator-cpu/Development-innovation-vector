@@ -7,8 +7,8 @@ export default function ContactSection() {
     <section id="contact" className="px-3 pt-16 sm:px-4 sm:pt-28">
       <div className="relative flex min-h-[420px] flex-col items-center justify-center overflow-hidden rounded-[20px] bg-[#2A2E33] px-5 py-14 text-center sm:rounded-[26px] sm:px-10 sm:py-24">
         <Image
-          src="/images/contact-first-light.jpg"
-          alt="Horizon at first light with a figure walking away"
+          src="/images/contact-div-software-development-noida.jpg"
+          alt="Figure walking toward the horizon at first light — start a conversation with DIV"
           fill
           sizes="100vw"
           className="object-cover"

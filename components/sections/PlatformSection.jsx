@@ -15,8 +15,8 @@ export default function PlatformSection() {
 
       <div className="relative flex min-h-[420px] overflow-hidden rounded-[20px] bg-[linear-gradient(160deg,#56604C_0%,#333B2E_55%,#1F2620_100%)] p-4 sm:rounded-[26px] sm:p-8 lg:min-h-[560px]">
         <Image
-          src="/images/platform-hills.jpg"
-          alt="Green hills under low mist"
+          src="/images/one-platform-crm-billing-support-background.jpg"
+          alt="Green hills under low mist behind DIV’s unified CRM, billing and support platform"
           fill
           sizes="(max-width: 1320px) 100vw, 1320px"
           className="object-cover"
@@ -76,8 +76,8 @@ export default function PlatformSection() {
           <div className="flex min-w-0 flex-col gap-3 sm:gap-4">
             <article className="relative flex min-h-[150px] flex-1 items-end overflow-hidden rounded-2xl border border-white/25 sm:min-h-[200px]">
               <Image
-                src="/images/platform.jpg"
-                alt="Engineer at a desk inside a data centre"
+                src="/images/engineer-monitoring-servers-in-data-centre.jpg"
+                alt="DIV engineer at a desk monitoring servers inside a data centre"
                 fill
                 sizes="(max-width: 1024px) 100vw, 640px"
                 className="object-cover"
