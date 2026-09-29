@@ -11,7 +11,7 @@ import { orgRef, pageMetadata } from '@/lib/seo';
 export const metadata = pageMetadata({
   title: 'About DIV — Software Development Team in Noida',
   description:
-    'DIV (Development Innovation Vector Pvt Ltd) is a Noida engineering team that builds, hosts and runs business software on a 99.9% uptime SLA. Founded 2026 by Harsh Jha.',
+    'DIV (Development Innovation Vector Pvt Ltd) is a Noida engineering team that builds, hosts and runs business software on a 99.9% uptime SLA. Founded 2026 by Ayush Pathak.',
   ogSub: 'A small team that answers its own phone.',
   path: '/about',
 });
@@ -45,10 +45,10 @@ const culture = [
 const founder = {
   '@context': 'https://schema.org',
   '@type': 'Person',
-  name: 'Harsh Jha',
+  name: 'Ayush Pathak',
   jobTitle: 'Founder',
   worksFor: orgRef,
-  image: `${siteConfig.url}/images/team/harsh-jha-founder-div.jpg`,
+  image: `${siteConfig.url}/images/team/ayush-pathak-founder-div.jpg`,
   url: `${siteConfig.url}/about`,
   description: 'Drives scalable API architectures and high-availability cloud deployments at DIV.',
 };

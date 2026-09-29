@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { validateDetails } from '@/lib/booking';
 import { siteConfig } from '@/lib/siteConfig';
+import ConsentCheckbox from '@/components/consent/ConsentCheckbox';
 
 const TOPICS = [
   'Cloud native deployments',
@@ -15,7 +16,7 @@ const TOPICS = [
 ];
 
 const input =
-  'w-full rounded-2xl border bg-white px-4 py-3.5 text-[15px] text-ink outline-none transition-colors duration-200 placeholder:text-muted/70 focus:border-ink';
+  'w-full rounded-2xl border bg-white px-4 py-3.5 text-[15px] text-ink outline-none transition-colors duration-200 placeholder:text-muted/70 focus:border-ink focus-visible:ring-2 focus-visible:ring-[#2F6BFF] focus-visible:ring-offset-2';
 
 function Field({ id, label, error, optional, children }) {
   return (
@@ -35,7 +36,7 @@ function Field({ id, label, error, optional, children }) {
 }
 
 export default function ContactForm() {
-  const empty = { name: '', email: '', phone: '', company: '', topic: '', message: '', website: '' };
+  const empty = { name: '', email: '', phone: '', company: '', topic: '', message: '', website: '', consent: false };
   const [v, setV] = useState(empty);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle'); // idle | sending | sent | error
@@ -56,6 +57,7 @@ export default function ContactForm() {
     e.preventDefault();
     const next = validateDetails(v);
     if (v.message.trim().length < 10) next.message = 'Tell us a little more — at least a sentence.';
+    if (!v.consent) next.consent = "Please tick the box so we're allowed to reply to you.";
     setErrors(next);
     if (Object.keys(next).length) {
       setFormError('Please fix the highlighted fields and try again.');
@@ -152,6 +154,16 @@ export default function ContactForm() {
         </div>
       </div>
 
+      <div className="mt-6">
+        <ConsentCheckbox
+          id="ct-consent"
+          checked={v.consent}
+          onChange={(e) => { setV((s) => ({ ...s, consent: e.target.checked })); if (errors.consent) setErrors((x) => ({ ...x, consent: undefined })); }}
+          error={errors.consent}
+          purpose="reply to this enquiry"
+        />
+      </div>
+
       <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" value={v.website} onChange={set('website')} className="pointer-events-none absolute -left-[9999px] h-0 w-0 opacity-0" />
 
       {formError ? (
@@ -166,18 +178,14 @@ export default function ContactForm() {
 
       <div className="mt-7 flex flex-wrap items-center justify-between gap-4">
         <p className="max-w-[42ch] text-[12.5px] leading-[1.5] text-muted">
-          We use this only to reply to you. See our{' '}
-          <a href="/privacy" className="underline decoration-line underline-offset-4 hover:text-ink">
-            privacy policy
-          </a>
-          .
+          We keep enquiries for up to 24 months, then delete them.
         </p>
         <button
           type="submit"
           disabled={status === 'sending'}
           className="inline-flex cursor-pointer items-center justify-center rounded-full bg-ink px-8 py-4 text-[15px] font-medium text-white transition-transform duration-500 ease-[cubic-bezier(.16,1,.3,1)] hover:-translate-y-0.5 disabled:cursor-wait disabled:opacity-60"
         >
-          {status === 'sending' ? 'Sending…' : 'Send message'}
+          {status === 'sending' ? 'Sending your message…' : 'Send message to DIV'}
         </button>
       </div>
     </form>

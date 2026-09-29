@@ -30,6 +30,7 @@ export async function POST(request) {
 
   const errors = validateDetails(q);
   if (q.message.length < 10) errors.message = 'Tell us a little more — at least a sentence.';
+  if (body.consent !== true) errors.consent = "Please tick the box so we're allowed to reply to you.";
   if (Object.keys(errors).length) return Response.json({ ok: false, errors }, { status: 422 });
 
   try {

@@ -6,9 +6,8 @@ import SmoothScroll from '@/components/motion/SmoothScroll';
 import BookingProvider from '@/components/booking/BookingProvider';
 import { SiteSchema } from '@/components/seo/StructuredData';
 import { clampDesc, ogImageUrl } from '@/lib/seo';
-import { SpeedInsights } from '@vercel/speed-insights/next';
-import { Analytics } from '@vercel/analytics/next';
-import { GoogleAnalytics } from '@next/third-parties/google';
+import CookieConsent from '@/components/consent/CookieConsent';
+import WhatsAppFab from '@/components/booking/WhatsAppFab';
 
 const DEFAULT_TITLE = 'Managed Software Development Company in India | DIV';
 const DEFAULT_DESC = clampDesc(siteConfig.description);
@@ -84,11 +83,6 @@ export default function RootLayout({ children }) {
       lang="en-IN"
       className={`${instrumentSans.variable} ${instrumentSerif.variable} ${plexMono.variable} antialiased`}
     >
-      <head>
-        {/* Cuts ~100–200ms off the first analytics/GA connection without blocking render. */}
-        <link rel="preconnect" href="https://www.googletagmanager.com" />
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-      </head>
       <body suppressHydrationWarning>
         <SiteSchema />
         <a
@@ -107,11 +101,9 @@ export default function RootLayout({ children }) {
           <SiteFooter />
         </BookingProvider>
 
-        <SpeedInsights />
-        <Analytics />
-        {process.env.NEXT_PUBLIC_GA_ID ? (
-          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
-        ) : null}
+        {/* Analytics load only after opt-in (DPDP Act 2023). No preconnect to Google before consent. */}
+        <WhatsAppFab />
+        <CookieConsent gaId={process.env.NEXT_PUBLIC_GA_ID} />
       </body>
     </html>
   );

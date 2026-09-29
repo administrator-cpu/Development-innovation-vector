@@ -1,6 +1,8 @@
 import Navbar from '@/components/layout/Navbar';
 import StructuredData from '@/components/seo/StructuredData';
 import HeroSection from '@/components/sections/HeroSection';
+import ProofSection from '@/components/sections/ProofSection';
+import EngagementFinderSection from '@/components/sections/EngagementFinderSection';
 import HowItWorksSection from '@/components/sections/HowItWorksSection';
 import PlatformSection from '@/components/sections/PlatformSection';
 import PillarsSection from '@/components/sections/PillarsSection';
@@ -26,12 +28,14 @@ export default function HomePage() {
       <StructuredData />
       <HeroSection navbar={<Navbar />} />
       <main id="main">
+        <ProofSection />
         <HowItWorksSection />
         <PlatformSection />
         <PillarsSection />
         <LookInsideSection />
         <ProductsSection />
         <EngagementsSection />
+        <EngagementFinderSection />
         <FaqSection />
         <ContactSection />
       </main>

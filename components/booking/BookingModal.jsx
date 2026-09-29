@@ -12,9 +12,10 @@ import {
   validateDetails,
 } from '@/lib/booking';
 import { siteConfig } from '@/lib/siteConfig';
+import ConsentCheckbox from '@/components/consent/ConsentCheckbox';
 
 const field =
-  'w-full rounded-2xl border bg-white px-4 py-3.5 text-[15px] text-ink outline-none transition-colors duration-200 placeholder:text-muted/70 focus:border-ink';
+  'w-full rounded-2xl border bg-white px-4 py-3.5 text-[15px] text-ink outline-none transition-colors duration-200 placeholder:text-muted/70 focus:border-ink focus-visible:ring-2 focus-visible:ring-[#2F6BFF] focus-visible:ring-offset-2';
 
 function Field({ id, label, error, children, hint }) {
   return (
@@ -38,7 +39,7 @@ export default function BookingModal({ source = 'site', onClose }) {
   const reduced = useReducedMotion();
   const [mounted, setMounted] = useState(false);
   const [step, setStep] = useState('details'); // details | schedule | success
-  const [details, setDetails] = useState({ name: '', email: '', phone: '', note: '', company: '' });
+  const [details, setDetails] = useState({ name: '', email: '', phone: '', note: '', company: '', consent: false });
   const [errors, setErrors] = useState({});
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
@@ -94,6 +95,7 @@ export default function BookingModal({ source = 'site', onClose }) {
   const goSchedule = (e) => {
     e.preventDefault();
     const next = validateDetails(details);
+    if (!details.consent) next.consent = "Please tick the box so we're allowed to reply to you.";
     setErrors(next);
     if (Object.keys(next).length) return;
     if (!date && dates[0]) setDate(dates[0]);
@@ -298,11 +300,19 @@ export default function BookingModal({ source = 'site', onClose }) {
                   className="pointer-events-none absolute -left-[9999px] h-0 w-0 opacity-0"
                 />
 
+                <ConsentCheckbox
+                  id="bk-consent"
+                  checked={details.consent}
+                  onChange={(e) => { setDetails((d) => ({ ...d, consent: e.target.checked })); if (errors.consent) setErrors((x) => ({ ...x, consent: undefined })); }}
+                  error={errors.consent}
+                  purpose="schedule and hold this call"
+                />
+
                 <button
                   type="submit"
                   className="mt-1 inline-flex w-full cursor-pointer items-center justify-center rounded-full bg-ink px-6 py-4 text-[15px] font-medium text-white transition-transform duration-500 ease-[cubic-bezier(.16,1,.3,1)] hover:-translate-y-0.5"
                 >
-                  Continue
+                  Continue to pick a time
                 </button>
                 <p className="text-center text-[12px] text-muted">
                   No newsletters. We use this only to reach you about this call.

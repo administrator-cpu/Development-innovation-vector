@@ -41,6 +41,7 @@ export async function POST(request) {
   const { date, time } = body;
 
   const errors = validateDetails({ name, email, phone });
+  if (body.consent !== true) errors.consent = "Please tick the box so we're allowed to reply to you.";
   if (Object.keys(errors).length) {
     return Response.json({ ok: false, errors }, { status: 422 });
   }

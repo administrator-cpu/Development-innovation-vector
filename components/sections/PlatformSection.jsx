@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { trustBadges } from '@/lib/content';
 
 export default function PlatformSection() {
   return (
@@ -98,7 +99,7 @@ export default function PlatformSection() {
                 Our metal, our monitoring
               </h3>
               <p className="mt-[7px] mb-3.5 max-w-[40ch] text-[12.5px] leading-[1.5] text-white/90">
-                Hosted in our own data centre in India. Nothing resold, nothing offshore.
+                Core systems and customer data hosted in India, monitored by our own engineers.
               </p>
               <div
                 role="img"
@@ -108,8 +109,16 @@ export default function PlatformSection() {
                 <div className="h-full w-full rounded bg-[linear-gradient(90deg,#7FA83B,#CDFC56)]" />
               </div>
               <div className="mt-2.5 flex justify-between font-mono text-[9.5px] tracking-[0.1em] text-white/70">
-                <span>DATA IN INDIA</span><span>100%</span>
+                <span>CUSTOMER DATA</span><span>IN INDIA</span>
               </div>
+              <ul className="m-0 mt-3.5 flex list-none flex-wrap gap-1.5 p-0">
+                {trustBadges.map((b) => (
+                  <li key={b} className="inline-flex items-center gap-1.5 rounded-full border border-white/30 bg-white/10 py-[5px] pr-2.5 pl-2 font-mono text-[9.5px] tracking-[0.08em] text-white">
+                    <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="#CDFC56" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M2 6.5l2.6 2.5L10 3" /></svg>
+                    {b}
+                  </li>
+                ))}
+              </ul>
             </article>
           </div>
         </div>

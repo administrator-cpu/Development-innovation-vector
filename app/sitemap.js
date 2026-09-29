@@ -21,5 +21,7 @@ export default function sitemap() {
     u('/sla', 0.7),
     u('/privacy', 0.3, 'yearly'),
     u('/terms', 0.3, 'yearly'),
+    u('/cookies', 0.2, 'yearly'),
+    u('/refund-policy', 0.3, 'yearly'),
   ];
 }

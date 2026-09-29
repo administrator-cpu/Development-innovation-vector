@@ -6,13 +6,13 @@ Put these in `public/`. The code already points at these paths with alt text wri
 
 | Path | Size (px) | What goes in it |
 |---|---|---|
-| `core/DIV-Development-Innovation-Vector-logo.avif` | 174×57 (3×) | DIV wordmark, transparent |
+| `images/div-logo.png` | 174×57 (3×) | DIV wordmark, transparent |
 | `images/hero-managed-software-development-india.jpg` | 2400×1400 | Home hero (LCP — compress hard) |
 | `images/how-it-works/01-audit-existing-spreadsheets-and-systems.jpg` | 600×600 | Step 1 |
-| `images/how-it-works/02-engineer-led-software-project-scoping.avif` | 600×600 | Step 2 |
+| `images/how-it-works/02-engineer-led-software-project-scoping.jpg` | 600×600 | Step 2 |
 | `images/how-it-works/03-staged-software-delivery.jpg` | 600×600 | Step 3 |
 | `images/how-it-works/04-data-migration-and-hosting-in-india.jpg` | 600×600 | Step 4 |
-| `images/how-it-works/05-24x7-software-monitoring-and-support.avif` | 600×600 | Step 5 |
+| `images/how-it-works/05-24x7-software-monitoring-and-support.jpg` | 600×600 | Step 5 |
 | `images/pillars/custom-business-software-for-indian-companies.jpg` | 1200×900 | Pillar 1 |
 | `images/pillars/div-data-centre-server-racks-india.jpg` | 1200×900 | Pillar 2 |
 | `images/pillars/long-term-managed-software-operations.jpg` | 1200×900 | Pillar 3 |

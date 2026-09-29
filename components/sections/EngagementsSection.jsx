@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import ArrowIcon from '@/components/ui/ArrowIcon';
-import { plans } from '@/lib/content';
+import { plans, roi } from '@/lib/content';
 
 export default function EngagementsSection() {
   return (
@@ -31,7 +31,7 @@ export default function EngagementsSection() {
               <article
                 key={plan.tier}
                 className={`flex min-w-0 flex-col gap-4 rounded-[18px] border p-6 backdrop-blur-[22px] backdrop-saturate-150 sm:p-8 ${
-                  dark ? 'border-white/25 bg-[rgba(24,38,58,0.72)]' : 'border-white/90 bg-white/85'
+                  dark ? 'border-white/25 bg-[rgba(24,38,58,0.9)]' : 'border-white/90 bg-white/95'
                 }`}
               >
                 <span
@@ -53,13 +53,21 @@ export default function EngagementsSection() {
                     {plan.sub}
                   </p>
                 </div>
-                <ul className="m-0 flex list-none flex-col gap-2.5 p-0">
+                <div className={`flex flex-col gap-1.5 border-y py-3.5 ${dark ? 'border-white/15' : 'border-ink/10'}`}>
+                  <p className={`flex flex-wrap items-baseline gap-1.5 ${dark ? 'text-white' : 'text-ink'}`}>
+                    <span className={`font-mono text-[10px] tracking-[0.12em] ${dark ? 'text-white/75' : 'text-[#5A5464]'}`}>FROM</span>
+                    <span className="text-[clamp(24px,2.4vw,30px)] leading-none font-medium tracking-[-0.035em]">{plan.from}</span>
+                    <span className={`text-[13px] ${dark ? 'text-white/75' : 'text-[#5A5464]'}`}>{plan.fromUnit}</span>
+                  </p>
+                  <p className={`text-[13.5px] ${dark ? 'text-white' : 'text-ink'}`}>{plan.then}</p>
+                </div>
+                <ul className="m-0 flex list-none flex-col gap-3 p-0">
                   {plan.items.map((item) => (
-                    <li key={item} className={`flex items-center gap-2.5 text-[13.5px] ${dark ? 'text-white' : 'text-ink'}`}>
-                      <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" aria-hidden="true" className="flex-none opacity-60">
+                    <li key={item} className={`flex items-start gap-2.5 text-[13.5px] leading-[1.45] ${dark ? 'text-white' : 'text-ink'}`}>
+                      <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" aria-hidden="true" className="mt-1 flex-none opacity-60">
                         <path d="M6 1v10M1 6h10" />
                       </svg>
-                      {item}
+                      <span className="min-w-0 flex-1">{item}</span>
                     </li>
                   ))}
                 </ul>
@@ -82,6 +90,21 @@ export default function EngagementsSection() {
               </article>
             );
           })}
+        </div>
+
+        <div className="relative z-10 mx-auto mt-4 flex max-w-[900px] flex-col gap-4 rounded-[18px] border border-white/90 bg-white/95 p-5 sm:p-7">
+          <div className="flex flex-wrap items-baseline justify-between gap-x-5 gap-y-1.5">
+            <h3 className="text-[clamp(17px,1.6vw,21px)] font-medium tracking-[-0.025em] text-ink">Why it costs less than the problem</h3>
+            <span className="font-mono text-[9.5px] tracking-[0.12em] text-[#5A5464]">TYPICAL SAVINGS · ESTIMATES</span>
+          </div>
+          <ul className="m-0 grid list-none grid-cols-1 gap-4 p-0 sm:grid-cols-3 sm:gap-5">
+            {roi.map((r) => (
+              <li key={r.value} className="flex min-w-0 flex-col gap-1.5 border-t border-ink/10 pt-3">
+                <span className="text-[clamp(20px,1.9vw,25px)] leading-[1.1] font-medium tracking-[-0.03em] text-ink">{r.value}</span>
+                <span className="text-[13px] leading-[1.5] text-[#5A5464]">{r.line}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>
