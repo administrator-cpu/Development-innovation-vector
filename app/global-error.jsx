@@ -11,7 +11,7 @@ export default function GlobalError({ reset }) {
             The site hit an error.
           </h1>
           <p style={{ fontSize: 16, lineHeight: 1.6, color: '#6B6577', marginTop: 16 }}>
-            Please try again. If it persists, call or WhatsApp +91 00000 00000 or email info@thediv.in.
+            Please try again. If it persists, call or WhatsApp +91 97165 33437 or email info@thediv.in.
           </p>
           <div style={{ display: 'flex', gap: 10, marginTop: 28, flexWrap: 'wrap' }}>
             <button type="button" onClick={() => reset()} style={{ cursor: 'pointer', border: 0, borderRadius: 999, background: '#16151A', color: '#fff', padding: '14px 28px', fontSize: 15 }}>

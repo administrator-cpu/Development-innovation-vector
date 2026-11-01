@@ -3,7 +3,8 @@ import { services } from '@/lib/services';
 import { caseStudies } from '@/lib/caseStudies';
 
 export default function sitemap() {
-  const lastModified = new Date();
+  // Bump when page content actually changes; a per-build date tells Google nothing.
+  const lastModified = new Date('2026-11-01');
   const u = (path, priority, changeFrequency = 'monthly') => ({
     url: `${siteConfig.url}${path}`,
     lastModified,

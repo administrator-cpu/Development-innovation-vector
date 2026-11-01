@@ -30,10 +30,10 @@ export default function HomePage() {
       <main id="main">
         <ProofSection />
         <HowItWorksSection />
-        <PlatformSection />
         <PillarsSection />
         <LookInsideSection />
         <ProductsSection />
+        <PlatformSection />
         <EngagementsSection />
         <EngagementFinderSection />
         <FaqSection />

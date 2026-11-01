@@ -20,7 +20,7 @@ export function SiteSchema() {
     logo: { '@type': 'ImageObject', url: `${siteConfig.url}${siteConfig.logo}` },
     image: `${siteConfig.url}${siteConfig.ogImage}`,
     foundingDate: String(siteConfig.foundingYear),
-    founder: { '@type': 'Person', name: 'Ayush Pathak' },
+    founder: { '@type': 'Person', name: 'Harsh Jha' },
     description: siteConfig.description,
     email: siteConfig.email,
     telephone: siteConfig.phone,

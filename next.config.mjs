@@ -17,6 +17,21 @@ const legacy = [
   ['/terms-of-service', '/terms'],
   ['/terms-and-conditions', '/terms'],
   ['/service-level-agreement', '/sla'],
+  // Routes from the current live site (administrator-cpu/DIV) that have no page here.
+  ['/products', '/#products'],
+  ['/products/:slug', '/#products'],
+  ['/support', '/contact'],
+  ['/reviews', '/work'],
+  ['/careers', '/about'],
+  ['/data-deletion', '/privacy#your-rights'],
+  ['/copyright', '/terms#ip'],
+  // Old account/admin pages — no login on the new site.
+  ['/login', '/contact'],
+  ['/register', '/contact'],
+  ['/forgot-password', '/contact'],
+  ['/success', '/'],
+  ['/profile', '/'],
+  ['/panal/:path*', '/'],
 ];
 
 const nextConfig = {
@@ -62,7 +77,7 @@ const nextConfig = {
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           { key: 'X-DNS-Prefetch-Control', value: 'on' },
-          { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
+          { key: 'Strict-Transport-Security', value: 'max-age=63072000' },
           { key: 'Content-Security-Policy', value: 'upgrade-insecure-requests' },
           { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },

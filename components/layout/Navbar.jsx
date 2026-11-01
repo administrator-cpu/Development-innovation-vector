@@ -41,7 +41,7 @@ export default function Navbar({ tone = 'dark', current }) {
       <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
         <Link href="/" className={`flex flex-none items-center gap-2.5 ${t.logo}`} aria-label="DIV — home">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/core/DIV-Development-Innovation-Vector-logo.avif" alt="DIV logo" width={58} height={19} className="block h-[19px] w-auto" />
+          <img src="/images/div-logo.png" alt="DIV logo" width={44} height={19} className="block h-[19px] w-auto" />
         </Link>
 
         <nav

@@ -9,7 +9,7 @@ export default function SiteFooter() {
       <div className="grid grid-cols-1 gap-6 border-b border-line pb-8 sm:grid-cols-2 sm:gap-11 lg:grid-cols-5">
         <div className="min-w-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/div-logo.png" alt="DIV logo" width={55} height={18} className="mb-3 block h-[18px] w-auto" />
+          <img src="/images/div-logo.png" alt="DIV logo" width={41} height={18} className="mb-3 block h-[18px] w-auto" />
           <p className="max-w-[26ch] text-[13px] leading-[1.55] text-muted">
             Built, hosted and monitored by one team in India.
           </p>

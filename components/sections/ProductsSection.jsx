@@ -63,17 +63,34 @@ export default function ProductsSection() {
               return (
                 <li key={name} className="flex min-h-[170px] min-w-0 flex-col gap-2.5 bg-navy p-5 outline outline-white/15 transition-colors duration-400 hover:bg-[#22303F] sm:p-6">
                   <span style={{ background: p.accent }} aria-hidden="true" className="block h-2 w-2 rounded-full" />
-                  <h3 className="text-[clamp(17px,1.5vw,20px)] font-normal tracking-[-0.025em] text-white">{p.name}</h3>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h3 className="text-[clamp(17px,1.5vw,20px)] font-normal tracking-[-0.025em] text-white">{p.name}</h3>
+                    {p.tag ? (
+                      <span className="rounded-full border border-white/30 px-[9px] py-[3px] text-[11px] text-white">{p.tag}</span>
+                    ) : null}
+                  </div>
                   <p className="text-[13px] leading-[1.45] text-white/75">{p.line}</p>
+                  <div className="mt-auto flex flex-wrap gap-2">
                   {shot ? (
                     <button
                       type="button"
                       onClick={() => openShot(shot)}
-                      className="mt-auto inline-flex min-h-9 cursor-pointer items-center gap-2 self-start rounded-full bg-lime px-3.5 py-1.5 text-[12.5px] text-ink"
+                      className="inline-flex min-h-9 cursor-pointer items-center gap-2 self-start rounded-full bg-lime px-3.5 py-1.5 text-[12.5px] text-ink"
                     >
                       See {p.name} live <span aria-hidden="true">↗</span>
                     </button>
                   ) : null}
+                  {p.url ? (
+                    <a
+                      href={p.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex min-h-9 items-center gap-2 self-start rounded-full border border-white/40 px-3.5 py-1.5 text-[12.5px] text-white transition-colors duration-300 hover:bg-white hover:text-ink"
+                    >
+                      {p.urlLabel} <span aria-hidden="true">↗</span>
+                    </a>
+                  ) : null}
+                  </div>
                 </li>
               );
             })}

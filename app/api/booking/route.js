@@ -1,20 +1,10 @@
 import { isSlotValid, validateDetails } from '@/lib/booking';
 import { customerEmail, internalEmail, sendEmail } from '@/lib/email';
 import { siteConfig } from '@/lib/siteConfig';
+import { clientIp, rateLimited } from '@/lib/rateLimit';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
-
-// Tiny in-memory rate limit. Good enough for a single-region deploy; move to
-// Upstash/KV if the site scales to multiple instances.
-const hits = new Map();
-function limited(ip) {
-  const now = Date.now();
-  const list = (hits.get(ip) || []).filter((t) => now - t < 60 * 60 * 1000);
-  list.push(now);
-  hits.set(ip, list);
-  return list.length > 5;
-}
 
 export async function POST(request) {
   let body;
@@ -24,8 +14,7 @@ export async function POST(request) {
     return Response.json({ ok: false, error: 'Invalid request.' }, { status: 400 });
   }
 
-  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'local';
-  if (limited(ip)) {
+  if (rateLimited(`booking:${clientIp(request)}`)) {
     return Response.json(
       { ok: false, error: 'Too many requests. Please email us instead.' },
       { status: 429 }

@@ -27,3 +27,20 @@ Not legal advice. Have counsel review `lib/legal.js` (every doc is marked `draft
 8. **Grievance officer**: the DPDP Rules expect a named contact for data requests. Add a name and email to the privacy policy.
 9. **Compliance badges**: DPDP-ready, CERT-In and ISO badges stay off until you hold evidence (an ISO certificate number, a CERT-In empanelment).
 10. **Reviews**: there are none on the site. If you add any, use only real, attributable ones; paid or incentivised reviews breach the BIS IS 19000:2022 online-review standard.
+
+## Audit of live site (thediv.in, repo administrator-cpu/DIV) — 1 Nov 2026
+
+Fixed in this codebase:
+- Product app links carried over (Connect CRM → fab5connect.com, Samadhan → samadhan.fab5connect.com, BahiKhata → tool-bahi-khataa.vercel.app), plus TR-069, Remote desktop, Samadhan Play Store, eHastakshar.
+- Social profiles (LinkedIn, Instagram, Facebook) added to structured data `sameAs`.
+- 301 redirects for live URLs with no page here: /products, /products/:slug, /support, /reviews, /careers, /data-deletion, /copyright.
+- Google verification token matches the live site.
+
+Decide before launch:
+1. **Login / accounts**: live site has /login, /register, /forgot-password, /success, /profile and an admin panel (/panal) using @thediv/auth-core with Google + GitHub OAuth. This codebase has none. If clients or staff use these, keep them on a subdomain (e.g. app.thediv.in) before switching DNS, or they will 404.
+2. **Data deletion page**: Google/Facebook OAuth apps usually require a public data-deletion URL. If OAuth stays, point the OAuth console at the new URL or rebuild /data-deletion.
+3. **Fake testimonials on live site**: /reviews uses invented names with pravatar.cc stock faces and unverified figures (30% cost cut, 45% engagement). Do not migrate; this is a misleading-advertising risk (Consumer Protection Act 2019, CCPA guidelines).
+4. **"100,000+" trust count** on the live hero with stock avatars: remove unless you can evidence it.
+5. **Instagram handle mismatch**: footer uses @development_innovation_vector, earlier config used @div__official_. Confirm which is real.
+6. **Live claims**: "24/7 monitoring", "99.9% uptime", "30% reduction in operational costs". Keep only what your SLA and data back.
+7. **Geist font + framer-motion** on live; new build uses self-hosted fonts and lighter motion. No action, just expect a visual change.

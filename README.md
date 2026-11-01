@@ -99,3 +99,9 @@ Before launch:
 - **Legal review.** lib/legal.js is a draft for Indian law (DPDP Act 2023, IT Act 2000). Set `draft: false` after counsel signs off (the draft notice only shows in dev).
 - **N.A.P.** lib/siteConfig.js must match the Google Business Profile exactly (address format, phone format).
 - **Founder portrait:** public/images/team/harsh-jha.jpg, then swap the initials block in app/about/page.jsx.
+
+## Images pulled from the live repo (administrator-cpu/DIV)
+- public/images/div-logo.png — brand logo (used by navbar, footer, schema). div-logo.webp is the original 256px square version.
+- public/images/products/connect-crm-dashboard.webp, samadhan-helpdesk.webp, bahikhata-ledger-app.webp — product login/landing screenshots, for product pages or OG cards.
+- app/favicon.ico — live favicon.
+All other homepage images were downloaded from the live thediv.in into public/images/ with the same names. Still missing: public/images/team/harsh-jha-founder-div.jpg (founder portrait, used on /about).

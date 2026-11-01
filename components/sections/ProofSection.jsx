@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { proof } from '@/lib/content';
+import CountUp from './CountUp';
 
 export default function ProofSection() {
   return (
@@ -20,7 +21,7 @@ export default function ProofSection() {
               className="flex h-full flex-col gap-2.5 rounded-[18px] border border-line bg-white p-5 text-ink transition-[transform,box-shadow] duration-500 ease-[cubic-bezier(.16,1,.3,1)] hover:-translate-y-1 hover:shadow-[0_34px_60px_-46px_rgba(0,0,0,0.45)] sm:p-6"
             >
               <span className="font-mono text-[9.5px] tracking-[0.14em] text-muted">{p.industry}</span>
-              <span className="text-[clamp(34px,3.6vw,50px)] leading-none font-medium tracking-[-0.045em]">{p.value}</span>
+              <CountUp value={p.value} count={p.count} className="text-[clamp(34px,3.6vw,50px)] leading-none font-medium tracking-[-0.045em] tabular-nums" />
               <span className="max-w-[32ch] text-sm leading-[1.45]">{p.line}</span>
               <span className="mt-auto pt-1.5 text-[12.5px] text-muted">{p.title} case study ↗</span>
             </Link>

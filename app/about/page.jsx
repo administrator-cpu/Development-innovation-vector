@@ -11,7 +11,7 @@ import { orgRef, pageMetadata } from '@/lib/seo';
 export const metadata = pageMetadata({
   title: 'About DIV — Software Development Team in Noida',
   description:
-    'DIV (Development Innovation Vector Pvt Ltd) is a Noida engineering team that builds, hosts and runs business software on a 99.9% uptime SLA. Founded 2026 by Ayush Pathak.',
+    'DIV (Development Innovation Vector Pvt Ltd) is a Noida engineering team that builds, hosts and runs business software on a 99.9% uptime SLA. Founded 2026 by Harsh Jha.',
   ogSub: 'A small team that answers its own phone.',
   path: '/about',
 });
@@ -45,10 +45,10 @@ const culture = [
 const founder = {
   '@context': 'https://schema.org',
   '@type': 'Person',
-  name: 'Ayush Pathak',
+  name: 'Harsh Jha',
   jobTitle: 'Founder',
   worksFor: orgRef,
-  image: `${siteConfig.url}/images/team/ayush-pathak-founder-div.jpg`,
+  image: `${siteConfig.url}/images/team/harsh-jha-founder-div.jpg`,
   url: `${siteConfig.url}/about`,
   description: 'Drives scalable API architectures and high-availability cloud deployments at DIV.',
 };
@@ -117,18 +117,18 @@ export default function AboutPage() {
           className="mt-10 grid grid-cols-1 gap-8 rounded-[22px] border border-line bg-white p-6 sm:grid-cols-[200px_minmax(0,1fr)] sm:p-10"
         >
           <Image
-            src="/images/team/ayush-pathak-founder-div.jpg"
-            alt="Ayush Pathak, founder of DIV, a software development company in Noida"
+            src="/images/team/harsh-jha-founder-div.jpg"
+            alt="Harsh Jha, founder of DIV, a software development company in Noida"
             width={400}
             height={400}
             sizes="200px"
             className="aspect-square w-full max-w-[200px] rounded-2xl bg-paper object-cover"
           />
           <div className="min-w-0 self-center">
-            <h3 className="text-[clamp(24px,2.4vw,32px)] leading-[1.1] font-medium tracking-[-0.03em]">Ayush Pathak</h3>
+            <h3 className="text-[clamp(24px,2.4vw,32px)] leading-[1.1] font-medium tracking-[-0.03em]">Harsh Jha</h3>
             <p className="mt-1 font-mono text-[11px] tracking-[0.14em] text-muted uppercase">Founder</p>
             <p className="mt-4 max-w-[54ch] text-[15px] leading-[1.65] text-[#3A3745]">
-              Ayush drives DIV&rsquo;s work on scalable API architectures and high-availability cloud deployments — and
+              Harsh drives DIV&rsquo;s work on scalable API architectures and high-availability cloud deployments — and
               still reviews the architecture of every system we take on.
             </p>
           </div>

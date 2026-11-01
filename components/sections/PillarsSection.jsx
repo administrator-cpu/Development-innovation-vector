@@ -18,10 +18,6 @@ export default function PillarsSection() {
         >
           Designed to support <span className="font-serif font-normal italic">every decision</span>
         </h2>
-        <p className="mx-auto mt-3.5 max-w-[52ch] text-[15px] leading-[1.55] text-muted">
-          Software, infrastructure and the people who run both — so the thing you bought keeps working
-          after the invoice is paid.
-        </p>
       </Reveal>
 
       <div className="mt-10 grid grid-cols-1 gap-4 text-left sm:gap-5 md:grid-cols-3">
@@ -30,7 +26,7 @@ export default function PillarsSection() {
             key={pillar.n}
             as="article"
             delay={i * 0.09}
-            className="rounded-[18px] border border-line bg-white px-2.5 pt-2.5 transition-[transform,box-shadow] duration-600 ease-[cubic-bezier(.16,1,.3,1)] hover:-translate-y-2 hover:shadow-[0_44px_70px_-50px_rgba(0,0,0,0.42)]"
+            className="rounded-[18px] border border-line bg-white p-2.5 transition-[transform,box-shadow] duration-600 ease-[cubic-bezier(.16,1,.3,1)] hover:-translate-y-2 hover:shadow-[0_44px_70px_-50px_rgba(0,0,0,0.42)]"
           >
             <div className="relative aspect-4/3 overflow-hidden rounded-xl bg-line">
               <Parallax distance={44} className="absolute -inset-y-[8%] inset-x-0">
@@ -42,12 +38,23 @@ export default function PillarsSection() {
                   className="object-cover"
                 />
               </Parallax>
-            </div>
-            <div className="px-3 pt-5 pb-6 sm:px-4">
-              <h3 className="font-serif text-[clamp(19px,1.8vw,25px)] leading-[1.1] font-normal italic">
-                {pillar.title}
-              </h3>
-              <p className="mt-2.5 max-w-[38ch] text-[13.5px] leading-[1.55] text-muted">{pillar.body}</p>
+              <span className="pointer-events-none absolute top-3 left-3 flex items-center gap-2 rounded-full bg-ink py-[7px] pr-3.5 pl-2 text-[13px] font-medium text-white">
+                <span className="grid size-[22px] place-items-center rounded-full bg-lime font-mono text-[11px] text-ink">
+                  {pillar.n}
+                </span>
+                {pillar.step}
+              </span>
+              <ul aria-label={pillar.step} className="absolute inset-x-3 bottom-3 m-0 flex list-none flex-col items-start gap-2 p-0">
+                {pillar.points.map((pt) => (
+                  <li
+                    key={pt}
+                    className="flex items-center gap-2 rounded-full border border-white/55 bg-linear-135 from-white/60 to-white/35 py-2 pr-3.5 pl-3 text-[13.5px] font-medium whitespace-nowrap text-ink shadow-[inset_0_1px_1px_rgba(255,255,255,0.9),inset_0_-1px_2px_rgba(255,255,255,0.25),0_8px_24px_-10px_rgba(0,0,0,0.35)] backdrop-blur-[18px] backdrop-saturate-[1.8] transition-transform duration-500 ease-[cubic-bezier(.16,1,.3,1)] hover:translate-x-1 hover:scale-[1.03]"
+                  >
+                    <span aria-hidden="true" className="size-1.5 rounded-full bg-ink" />
+                    {pt}
+                  </li>
+                ))}
+              </ul>
             </div>
           </Reveal>
         ))}
