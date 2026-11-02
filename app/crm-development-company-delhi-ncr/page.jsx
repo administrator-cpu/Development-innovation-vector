@@ -7,7 +7,7 @@ import Reveal from '@/components/motion/Reveal';
 import BookingButton from '@/components/booking/BookingButton';
 import PillButton from '@/components/ui/PillButton';
 import JsonLd from '@/components/seo/JsonLd';
-import { crmHub as c, connectCrm, NCR_AREAS } from '@/lib/crm';
+import { crmHub as c, connectCrm, crmNoida, crmLandings, blogPosts, NCR_AREAS } from '@/lib/crm';
 import { getCaseStudy } from '@/lib/caseStudies';
 import { services } from '@/lib/services';
 import { siteConfig } from '@/lib/siteConfig';
@@ -122,6 +122,29 @@ export default function CrmDevelopmentPage() {
       <section className="mx-auto max-w-[1320px] px-5 pt-16 sm:px-10 sm:pt-28">
         <Reveal>
           <h2 className={h2}>
+            Who we <span className="font-serif font-normal italic">build for</span>
+          </h2>
+        </Reveal>
+        <ul className="m-0 mt-8 grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            { href: connectCrm.path, label: 'ISPs and telecom resellers', sub: 'Connect CRM, proven for ISPs today.' },
+            { href: crmLandings.serviceBusiness.path, label: 'Service businesses', sub: crmLandings.serviceBusiness.title + ' ' + crmLandings.serviceBusiness.accent },
+            { href: crmLandings.productCompany.path, label: 'Product companies', sub: crmLandings.productCompany.title + ' ' + crmLandings.productCompany.accent },
+            { href: crmLandings.hosting.path, label: 'CRM hosting & maintenance', sub: '₹2,499 a month, servers in India.' },
+          ].map((x) => (
+            <li key={x.href}>
+              <Link href={x.href} className="flex h-full flex-col gap-2 rounded-[18px] border border-line bg-white p-6 transition-transform duration-500 hover:-translate-y-1">
+                <span className="text-[16px] font-medium tracking-[-0.02em]">{x.label}</span>
+                <span className="text-[13.5px] leading-[1.5] text-muted">{x.sub}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="mx-auto max-w-[1320px] px-5 pt-16 sm:px-10 sm:pt-28">
+        <Reveal>
+          <h2 className={h2}>
             The engineering <span className="font-serif font-normal italic">behind it</span>
           </h2>
           <p className="mt-4 max-w-[60ch] text-[15.5px] leading-[1.6] text-muted">
@@ -139,7 +162,10 @@ export default function CrmDevelopmentPage() {
           ))}
         </ul>
         <p className="mt-8 max-w-[70ch] text-[14.5px] leading-[1.6] text-muted">
-          We work with businesses across {NCR_AREAS.slice(0, -1).join(', ')} and {NCR_AREAS.at(-1)}, from our office in Sector 31, Noida.
+          We work with businesses across {NCR_AREAS.slice(0, -1).join(', ')} and {NCR_AREAS.at(-1)}, from our office in{' '}
+          <Link href={crmNoida.path} className="text-ink underline underline-offset-4">Sector 31, Noida</Link>, with{' '}
+          <Link href={crmLandings.delhi.path} className="text-ink underline underline-offset-4">setup and training across Delhi</Link>. Wondering about budget? Read{' '}
+          <Link href={`/blog/${blogPosts[0].slug}`} className="text-ink underline underline-offset-4">what custom CRM development costs in India</Link>.
         </p>
       </section>
 

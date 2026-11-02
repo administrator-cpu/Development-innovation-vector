@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import InnerPage from '@/components/layout/InnerPage';
 import PageHero from '@/components/ui/PageHero';
@@ -7,8 +8,7 @@ import Reveal from '@/components/motion/Reveal';
 import BookingButton from '@/components/booking/BookingButton';
 import PillButton from '@/components/ui/PillButton';
 import JsonLd from '@/components/seo/JsonLd';
-import { connectCrm as p, crmHub } from '@/lib/crm';
-import { plans } from '@/lib/content';
+import { connectCrm as p, crmHub, crmPricing, crmFeatures, ispProducts, ispProductsPath, crmLandings } from '@/lib/crm';
 import { siteConfig } from '@/lib/siteConfig';
 import { faqLd, orgRef, pageMetadata } from '@/lib/seo';
 
@@ -23,8 +23,7 @@ export const metadata = pageMetadata({
 const h2 = 'text-[clamp(28px,4vw,54px)] leading-[1.04] font-medium tracking-[-0.04em] text-balance';
 
 export default function ConnectCrmPage() {
-  const start = plans.find((x) => x.tier === 'Start');
-  // No price or rating in schema on purpose: offers/aggregateRating only once a pricing page and real reviews are visible.
+  // No offers/aggregateRating: pricing is a custom quote and there are no public reviews yet.
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
@@ -46,8 +45,18 @@ export default function ConnectCrmPage() {
         <BookingButton tone="dark" source="connect-crm:hero">
           Book a free demo
         </BookingButton>
-        <PillButton href="/#inside">Try the interactive demo</PillButton>
+        <PillButton href={crmPricing.path}>See pricing</PillButton>
       </PageHero>
+
+      <section className="mx-auto max-w-[1320px] px-5 pt-10 sm:px-10 sm:pt-14">
+        <div className="animate-rise overflow-hidden rounded-[20px] border border-line bg-white [animation-delay:0.2s]">
+          <Image src={p.screenshot.src} alt={p.screenshot.alt} width={p.screenshot.width} height={p.screenshot.height} priority sizes="(max-width: 1320px) 100vw, 1320px" className="block h-auto w-full" />
+        </div>
+        <p className="mt-3 flex flex-wrap gap-x-4 gap-y-1 font-mono text-[10.5px] tracking-[0.12em] text-muted uppercase">
+          <span>Connect CRM with sample data</span>
+          <Link href="/#inside" className="text-ink underline underline-offset-4">Try the interactive demo →</Link>
+        </p>
+      </section>
 
       <section className="mx-auto max-w-[1320px] px-5 pt-16 sm:px-10 sm:pt-28">
         <Reveal className="max-w-[820px]">
@@ -90,47 +99,62 @@ export default function ConnectCrmPage() {
       <section className="mx-auto max-w-[1320px] px-5 pt-16 sm:px-10 sm:pt-28">
         <Reveal>
           <h2 className={h2}>
-            Works with the rest of <span className="font-serif font-normal italic">your network stack</span>
+            Features in <span className="font-serif font-normal italic">detail</span>
           </h2>
-          <p className="mt-4 max-w-[60ch] text-[15.5px] leading-[1.6] text-muted">
-            Connect CRM shares one record with DIV&rsquo;s other telecom and support products.
-          </p>
         </Reveal>
         <ul className="m-0 mt-8 grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-3">
-          {p.works.map((w) => (
-            <li key={w.name} className="rounded-[18px] border border-line bg-white p-6">
-              <span className="text-[16px] font-medium tracking-[-0.02em]">{w.name}</span>
-              <p className="mt-2 text-[14px] leading-[1.55] text-muted">{w.body}</p>
+          {crmFeatures.map((ft) => (
+            <li key={ft.slug}>
+              <Link href={`${p.path}/${ft.slug}`} className="flex h-full flex-col gap-2 rounded-[18px] border border-line bg-white p-6 transition-transform duration-500 hover:-translate-y-1">
+                <span className="text-[16px] font-medium tracking-[-0.02em]">{ft.name}</span>
+                <span className="text-[13.5px] leading-[1.5] text-muted">{ft.title} {ft.accent}</span>
+              </Link>
             </li>
           ))}
         </ul>
       </section>
 
-      {start ? (
-        <section className="mx-auto max-w-[1320px] px-5 pt-16 sm:px-10 sm:pt-28">
-          <Reveal className="grid grid-cols-1 gap-8 rounded-[22px] bg-[#F3F0E9] p-6 sm:p-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-            <div className="min-w-0">
-              <span className="font-mono text-[10.5px] tracking-[0.14em] text-muted uppercase">Pricing</span>
-              <p className="mt-4 text-[clamp(32px,4vw,52px)] leading-none font-medium tracking-[-0.04em]">
-                {start.from} <span className="text-[15px] font-normal tracking-normal text-muted">{start.fromUnit}</span>
-              </p>
-              <p className="mt-3 text-[15px] text-muted">{start.then}</p>
+      <section className="mx-auto max-w-[1320px] px-5 pt-16 sm:px-10 sm:pt-28">
+        <Reveal>
+          <h2 className={h2}>
+            Also from DIV <span className="font-serif font-normal italic">for ISPs</span>
+          </h2>
+          <p className="mt-4 max-w-[60ch] text-[15.5px] leading-[1.6] text-muted">
+            Separate products, built, hosted and supported by the same team.
+          </p>
+        </Reveal>
+        <ul className="m-0 mt-8 grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-3">
+          {ispProducts.map((w) => (
+            <li key={w.slug}>
+              <Link href={`${ispProductsPath}/${w.slug}`} className="flex h-full flex-col gap-2 rounded-[18px] border border-line bg-white p-6 transition-transform duration-500 hover:-translate-y-1">
+                <span className="text-[16px] font-medium tracking-[-0.02em]">{w.name}</span>
+                <span className="text-[14px] leading-[1.55] text-muted">{w.line}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="mx-auto max-w-[1320px] px-5 pt-16 sm:px-10 sm:pt-28">
+        <Reveal className="grid grid-cols-1 gap-6 rounded-[22px] bg-[#F3F0E9] p-6 sm:p-10 lg:grid-cols-3">
+          {crmPricing.lines.map((l) => (
+            <div key={l.label} className="min-w-0">
+              <span className="font-mono text-[10.5px] tracking-[0.14em] text-muted uppercase">{l.label}</span>
+              <p className="mt-3 text-[clamp(26px,3vw,38px)] leading-none font-medium tracking-[-0.04em]">{l.value}</p>
+              <p className="mt-2 text-[14px] text-muted">{l.unit} + GST</p>
             </div>
-            <ul className="m-0 flex list-none flex-col gap-2.5 self-end p-0">
-              {start.items.map((it) => (
-                <li key={it} className="flex gap-3 text-[14.5px] leading-[1.5]">
-                  <span aria-hidden="true">—</span>
-                  {it}
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        </section>
-      ) : null}
+          ))}
+          <div className="lg:col-span-3">
+            <PillButton href={crmPricing.path} tone="dark">Full Connect CRM pricing</PillButton>
+          </div>
+        </Reveal>
+      </section>
 
       <section className="mx-auto max-w-[1320px] px-5 pt-12 sm:px-10">
         <p className="max-w-[70ch] text-[14.5px] leading-[1.6] text-muted">
-          Need a CRM for a different kind of business? See our{' '}
+          Not an ISP? We build Connect CRM for{' '}
+          <Link href={crmLandings.serviceBusiness.path} className="text-ink underline underline-offset-4">service businesses</Link> and{' '}
+          <Link href={crmLandings.productCompany.path} className="text-ink underline underline-offset-4">product companies</Link> too. See all our{' '}
           <Link href={crmHub.path} className="text-ink underline underline-offset-4">custom CRM development services in Delhi NCR</Link>.
         </p>
       </section>

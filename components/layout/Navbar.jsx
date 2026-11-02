@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { navLinks, productGroups } from '@/lib/content';
 import { services } from '@/lib/services';
-import { crmHub, connectCrm } from '@/lib/crm';
+import { crmHub, connectCrm, ispProducts, ispProductsPath } from '@/lib/crm';
 import { useBooking } from '@/components/booking/BookingProvider';
 
 /**
@@ -28,6 +28,12 @@ const WATER = {
   mlink: 'text-ink/75 hover:bg-white/60 hover:text-ink focus-visible:bg-white/60',
 };
 
+const productHref = (name) => {
+  if (name === connectCrm.name) return connectCrm.path;
+  const p = ispProducts.find((x) => x.name === name);
+  return p ? `${ispProductsPath}/${p.slug}` : '/#inside';
+};
+
 // Hover panels. Keyed by nav label; links without an entry have no panel.
 const MENUS = {
   Services: {
@@ -48,7 +54,7 @@ const MENUS = {
   Platform: {
     width: 820,
     cols: 'grid-cols-4',
-    groups: productGroups.map((g) => ({ title: g.label, items: g.items.map((name) => ({ label: name, href: name === connectCrm.name ? connectCrm.path : '/#inside' })) })),
+    groups: productGroups.map((g) => ({ title: g.label, items: g.items.map((name) => ({ label: name, href: productHref(name) })) })),
     footer: { label: 'See the platform', href: '/#platform' },
     image: { src: '/images/one-platform-crm-billing-support-background.jpg', alt: 'One DIV platform for CRM, billing and support', caption: 'One record across every product. Drishti audit trail in all.' },
     cta: { kicker: 'See it working', head: 'Walk through the live products with an engineer.', label: 'Book a demo' },
