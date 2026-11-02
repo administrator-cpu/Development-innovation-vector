@@ -4,7 +4,7 @@ import { caseStudies } from '@/lib/caseStudies';
 
 export default function sitemap() {
   // Bump when page content actually changes; a per-build date tells Google nothing.
-  const lastModified = new Date('2026-11-01');
+  const lastModified = new Date('2026-11-02');
   const u = (path, priority, changeFrequency = 'monthly') => ({
     url: `${siteConfig.url}${path}`,
     lastModified,
@@ -14,6 +14,8 @@ export default function sitemap() {
   return [
     u('/', 1, 'weekly'),
     u('/services', 0.9),
+    u('/crm-development-company-delhi-ncr', 0.9),
+    u('/connect-crm', 0.9),
     ...services.map((s) => u(`/${s.slug}`, 0.9)),
     u('/work', 0.8),
     ...caseStudies.map((c) => u(`/work/${c.slug}`, 0.7)),
