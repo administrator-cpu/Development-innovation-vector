@@ -81,6 +81,7 @@ const nextConfig = {
           { key: 'Content-Security-Policy', value: 'upgrade-insecure-requests' },
           { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+          { key: 'Content-Security-Policy', value: "frame-ancestors 'self' https://harsh-jha.vercel.app" },
         ],
       },
       {
