@@ -5,10 +5,32 @@ export const runtime = 'edge';
 const DEFAULT_TITLE = 'Managed software development in India';
 const DEFAULT_SUB = 'We build your software, then we run it — for years.';
 
-export function GET(request) {
+const b64url = (buf) =>
+  btoa(String.fromCharCode(...new Uint8Array(buf))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+
+/** Same HMAC as ogImageUrl() in lib/seo.js. Without a key, custom text is shown only outside production. */
+async function signedText(searchParams) {
+  const title = searchParams.get('title') || '';
+  const sub = searchParams.get('sub') || '';
+  if (!title && !sub) return { title: '', sub: '' };
+  const key = process.env.OG_SIGNING_KEY;
+  if (!key) return process.env.NODE_ENV === 'production' ? { title: '', sub: '' } : { title, sub };
+  const k = await crypto.subtle.importKey('raw', new TextEncoder().encode(key), { name: 'HMAC', hash: 'SHA-256' }, false, [
+    'sign',
+  ]);
+  const mac = b64url(await crypto.subtle.sign('HMAC', k, new TextEncoder().encode(`${title}\n${sub}`))).slice(0, 22);
+  return mac === searchParams.get('s') ? { title, sub } : { title: '', sub: '' };
+}
+
+export async function GET(request) {
   const { searchParams } = new URL(request.url);
-  const title = (searchParams.get('title') || DEFAULT_TITLE).slice(0, 110);
-  const sub = (searchParams.get('sub') || DEFAULT_SUB).slice(0, 140);
+  const text = await signedText(searchParams);
+  // Unsigned or forged text: send everyone to the one default card instead of rendering (and caching) each URL.
+  if ((searchParams.has('title') || searchParams.has('sub')) && !text.title && !text.sub) {
+    return new Response(null, { status: 302, headers: { Location: '/og', 'Cache-Control': 'public, max-age=86400' } });
+  }
+  const title = (text.title || DEFAULT_TITLE).slice(0, 110);
+  const sub = (text.sub || DEFAULT_SUB).slice(0, 140);
   const big = title.length <= 48;
 
   return new ImageResponse(

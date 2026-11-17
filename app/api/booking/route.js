@@ -1,4 +1,4 @@
-import { isSlotValid, validateDetails } from '@/lib/booking';
+import { cleanText, isSlotValid, validateDetails } from '@/lib/booking';
 import { customerEmail, internalEmail, sendEmail } from '@/lib/email';
 import { siteConfig } from '@/lib/siteConfig';
 import { clientIp, rateLimited } from '@/lib/rateLimit';
@@ -24,9 +24,9 @@ export async function POST(request) {
   // Honeypot — bots fill hidden fields, humans never see them.
   if (body.company) return Response.json({ ok: true });
 
-  const name = String(body.name || '').trim().slice(0, 120);
-  const email = String(body.email || '').trim().slice(0, 160);
-  const phone = String(body.phone || '').trim().slice(0, 30);
+  const name = cleanText(body.name, 120);
+  const email = cleanText(body.email, 160);
+  const phone = cleanText(body.phone, 30);
   const { date, time } = body;
 
   const errors = validateDetails({ name, email, phone });
@@ -47,17 +47,16 @@ export async function POST(request) {
     phone,
     date,
     time,
-    note: String(body.note || '').slice(0, 1000),
-    source: String(body.source || 'site').slice(0, 60),
+    note: cleanText(body.note, 1000, { multiline: true }),
+    source: cleanText(body.source || 'site', 60),
   };
 
+  // Our copy decides success; a failed confirmation is logged so the visitor does not book the slot twice.
   try {
-    const internal = internalEmail(booking);
-    const customer = customerEmail(booking);
-    await Promise.all([
-      sendEmail({ to: siteConfig.email, replyTo: email, ...internal }),
-      sendEmail({ to: email, replyTo: siteConfig.email, ...customer }),
-    ]);
+    await sendEmail({ to: siteConfig.email, replyTo: email, ...internalEmail(booking) });
+    await sendEmail({ to: email, replyTo: siteConfig.email, ...customerEmail(booking) }).catch((err) =>
+      console.error('[booking] confirmation failed', err)
+    );
   } catch (err) {
     console.error('[booking] send failed', err);
     return Response.json(

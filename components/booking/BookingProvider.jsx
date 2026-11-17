@@ -1,7 +1,12 @@
 'use client';
 
-import { createContext, useCallback, useContext, useMemo, useState } from 'react';
-import BookingModal from './BookingModal';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import dynamic from 'next/dynamic';
+
+// The modal (form, slot picker, motion) is in every page's layout but opened by few visitors:
+// load it on first open instead of shipping it with every page.
+const loadModal = () => import('./BookingModal');
+const BookingModal = dynamic(loadModal, { ssr: false });
 
 const BookingContext = createContext(null);
 
@@ -17,6 +22,14 @@ export function useBooking() {
  */
 export default function BookingProvider({ children }) {
   const [source, setSource] = useState(null);
+
+  // Fetch it once the page is idle, so the first click opens it without a wait.
+  useEffect(() => {
+    const idle = window.requestIdleCallback ?? ((cb) => setTimeout(cb, 2500));
+    const cancel = window.cancelIdleCallback ?? clearTimeout;
+    const id = idle(() => void loadModal());
+    return () => cancel(id);
+  }, []);
 
   const openBooking = useCallback((from = 'site') => setSource(from), []);
   const closeBooking = useCallback(() => setSource(null), []);
