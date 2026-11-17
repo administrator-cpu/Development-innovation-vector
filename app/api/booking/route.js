@@ -24,9 +24,9 @@ export async function POST(request) {
   // Honeypot — bots fill hidden fields, humans never see them.
   if (body.company) return Response.json({ ok: true });
 
-  const name = String(body.name || '').trim();
-  const email = String(body.email || '').trim();
-  const phone = String(body.phone || '').trim();
+  const name = String(body.name || '').trim().slice(0, 120);
+  const email = String(body.email || '').trim().slice(0, 160);
+  const phone = String(body.phone || '').trim().slice(0, 30);
   const { date, time } = body;
 
   const errors = validateDetails({ name, email, phone });
