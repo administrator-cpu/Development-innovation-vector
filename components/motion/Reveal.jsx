@@ -1,13 +1,13 @@
 'use client';
 
-import { motion, useReducedMotion } from 'motion/react';
+import { useEffect, useRef } from 'react';
 
-const DIRECTIONS = {
-  up: { y: 22, x: 0 },
-  down: { y: -22, x: 0 },
-  left: { x: 26, y: 0 },
-  right: { x: -26, y: 0 },
-  none: { x: 0, y: 0 },
+const OFFSET = {
+  up: '0, 22px',
+  down: '0, -22px',
+  left: '26px, 0',
+  right: '-26px, 0',
+  none: '0, 0',
 };
 
 /**
@@ -16,38 +16,56 @@ const DIRECTIONS = {
  *   <Reveal><h2 …/></Reveal>
  *   <Reveal as="article" delay={0.08} from="left">…</Reveal>
  *
- * Children stay Server Components — only the wrapper is client.
- * Content is visible with no JS / reduced motion (opacity animates from 1).
+ * CSS transition + IntersectionObserver (globals.css, [data-reveal]) instead of motion: it ran on every page
+ * and cost ~40 kB of JS for fade-ins. Content stays visible without JS (the hidden state needs html.js) and
+ * with reduced motion.
  */
 export default function Reveal({
   children,
-  as = 'div',
+  as: Tag = 'div',
   from = 'up',
   delay = 0,
   duration = 0.7,
   amount = 0.3,
   className,
+  style,
   ...rest
 }) {
-  const reduced = useReducedMotion();
-  const Tag = motion[as] ?? motion.div;
-  const offset = DIRECTIONS[from] ?? DIRECTIONS.up;
+  const ref = useRef(null);
 
-  if (reduced) {
-    return (
-      <Tag className={className} {...rest}>
-        {children}
-      </Tag>
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return undefined;
+    const show = () => el.setAttribute('data-shown', '');
+    if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      show();
+      return undefined;
+    }
+    const io = new IntersectionObserver(
+      ([e]) => {
+        // Taller-than-viewport blocks can never be `amount` visible: half a screen of them is enough.
+        if (e.intersectionRatio >= amount || e.intersectionRect.height >= window.innerHeight * 0.5) {
+          show();
+          io.disconnect();
+        }
+      },
+      { threshold: [0, amount, 1] }
     );
-  }
+    io.observe(el);
+    return () => io.disconnect();
+  }, [amount]);
 
   return (
     <Tag
+      ref={ref}
+      data-reveal=""
       className={className}
-      initial={{ opacity: 0, ...offset }}
-      whileInView={{ opacity: 1, x: 0, y: 0 }}
-      viewport={{ once: true, amount }}
-      transition={{ duration, delay, ease: [0.16, 1, 0.3, 1] }}
+      style={{
+        '--reveal-offset': OFFSET[from] ?? OFFSET.up,
+        '--reveal-delay': `${delay}s`,
+        '--reveal-duration': `${duration}s`,
+        ...style,
+      }}
       {...rest}
     >
       {children}

@@ -10,6 +10,15 @@ npm install
 npm run dev
 ```
 
+## Environment
+
+| Variable | Needed for |
+|---|---|
+| `RESEND_API_KEY` | Contact and booking emails. Missing in production → the forms return an error (leads never vanish silently). |
+| `BOOKING_FROM_EMAIL` | Sender, default `DIV <bookings@thediv.in>` (domain must be verified in Resend). |
+| `OG_SIGNING_KEY` | Any long random string, set for **build and runtime**. Signs the text on `/og` social cards; without it, production serves only the default card. |
+| `NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_BING_SITE_VERIFICATION` | Optional. |
+
 ## File structure
 
 ```

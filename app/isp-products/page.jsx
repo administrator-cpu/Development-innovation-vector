@@ -6,6 +6,7 @@ import Reveal from '@/components/motion/Reveal';
 import BookingButton from '@/components/booking/BookingButton';
 import JsonLd from '@/components/seo/JsonLd';
 import { connectCrm, ispProducts, ispProductsPath as path } from '@/lib/crm';
+import { bharatRadiusComparePath } from '@/lib/bharatRadius';
 import { siteConfig } from '@/lib/siteConfig';
 import { pageMetadata } from '@/lib/seo';
 
@@ -51,6 +52,21 @@ export default function IspProductsPage() {
               </Link>
             </Reveal>
           ))}
+        </ul>
+      </section>
+      <section className="mx-auto max-w-[1320px] px-5 pt-16 sm:px-10 sm:pt-24">
+        <h2 className="text-[clamp(22px,2.4vw,32px)] leading-[1.1] font-medium tracking-[-0.03em]">Guides for ISPs</h2>
+        <ul className="m-0 mt-5 flex list-none flex-col gap-2 p-0 text-[15px]">
+          <li>
+            <Link href="/blog/what-is-a-radius-server" className="text-ink underline underline-offset-4 hover:text-rose">
+              What is a RADIUS server, and why does an ISP need one?
+            </Link>
+          </li>
+          <li>
+            <Link href={bharatRadiusComparePath} className="text-ink underline underline-offset-4 hover:text-rose">
+              daloRADIUS alternative: Bharat Radius compared
+            </Link>
+          </li>
         </ul>
       </section>
       <CtaBand source="isp-products" title="Tell us how your network runs." accent="We'll show you what fits." />

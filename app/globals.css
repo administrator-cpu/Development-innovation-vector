@@ -74,3 +74,18 @@ html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
 .lenis.lenis-stopped { overflow: hidden; }
+
+/* Scroll reveal (components/motion/Reveal.jsx). Hidden only once JS is known to run (html.js). */
+[data-reveal] {
+  transition:
+    opacity var(--reveal-duration, 0.7s) cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0s),
+    transform var(--reveal-duration, 0.7s) cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0s);
+}
+html.js [data-reveal]:not([data-shown]) {
+  opacity: 0;
+  transform: translate(var(--reveal-offset, 0, 22px));
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { transition: none; }
+  html.js [data-reveal]:not([data-shown]) { opacity: 1; transform: none; }
+}

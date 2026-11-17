@@ -82,7 +82,12 @@ export default function RootLayout({ children }) {
     <html
       lang="en-IN"
       className={`${instrumentSans.variable} ${instrumentSerif.variable} ${plexMono.variable} antialiased`}
+      suppressHydrationWarning
     >
+      <head>
+        {/* Before first paint: lets CSS hide scroll-reveal blocks only when JS will show them again. */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+      </head>
       <body suppressHydrationWarning>
         <SiteSchema />
         <a

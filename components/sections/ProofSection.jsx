@@ -7,13 +7,13 @@ export default function ProofSection() {
     <section id="proof" aria-labelledby="proof-heading" className="mx-auto max-w-[1320px] px-5 pt-8 sm:px-10 sm:pt-12">
       <div className="mb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2.5">
         <h2 id="proof-heading" className="font-mono text-[10px] font-normal tracking-[0.16em] text-muted">
-          CLIENT RESULTS · ANONYMISED, AS REPORTED
+          CLIENT RESULTS · AS REPORTED
         </h2>
         <Link href="/work" className="border-b border-ink pb-px text-[13px] text-ink hover:text-muted">
           All case studies →
         </Link>
       </div>
-      <ul className="m-0 grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-2 lg:grid-cols-3 lg:gap-4">
+      <ul className="m-0 grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-2 lg:grid-cols-4 lg:gap-4">
         {proof.map((p) => (
           <li key={p.href} className="min-w-0">
             <Link

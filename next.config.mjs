@@ -78,10 +78,11 @@ const nextConfig = {
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           { key: 'X-DNS-Prefetch-Control', value: 'on' },
           { key: 'Strict-Transport-Security', value: 'max-age=63072000' },
-          { key: 'Content-Security-Policy', value: 'upgrade-insecure-requests' },
           { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
-          { key: 'Content-Security-Policy', value: "frame-ancestors 'self' https://harsh-jha.vercel.app" },
+          // One CSP header: a second entry with the same key replaced the first, so
+          // upgrade-insecure-requests was silently dropped.
+          { key: 'Content-Security-Policy', value: "upgrade-insecure-requests; frame-ancestors 'self' https://harsh-jha.vercel.app" },
         ],
       },
       {

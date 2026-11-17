@@ -56,12 +56,15 @@ export default function BookingModal({ source = 'site', onClose }) {
   // Lock the page (and Lenis) while the dialog is open; restore on unmount.
   useEffect(() => {
     const prev = document.body.style.overflow;
+    const opener = document.activeElement;
     document.body.style.overflow = 'hidden';
     window.lenis?.stop();
     firstFieldRef.current?.focus();
     return () => {
       document.body.style.overflow = prev;
       window.lenis?.start();
+      // Keyboard and screen-reader users land back on the button that opened the dialog.
+      if (opener instanceof HTMLElement && opener.isConnected) opener.focus();
     };
   }, []);
 

@@ -1,10 +1,15 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { Analytics } from '@vercel/analytics/next';
-import { SpeedInsights } from '@vercel/speed-insights/next';
-import { GoogleAnalytics } from '@next/third-parties/google';
+
+// Loaded only after opt-in: visitors who never consent never download the analytics code.
+const Analytics = dynamic(() => import('@vercel/analytics/next').then((m) => m.Analytics), { ssr: false });
+const SpeedInsights = dynamic(() => import('@vercel/speed-insights/next').then((m) => m.SpeedInsights), { ssr: false });
+const GoogleAnalytics = dynamic(() => import('@next/third-parties/google').then((m) => m.GoogleAnalytics), {
+  ssr: false,
+});
 
 const KEY = 'div-consent';
 export const openCookieSettings = () => window.dispatchEvent(new Event('div:cookie-settings'));

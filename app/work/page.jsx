@@ -9,7 +9,7 @@ import { pageMetadata } from '@/lib/seo';
 export const metadata = pageMetadata({
   title: 'Software Development Case Studies & Results',
   description:
-    'Real DIV results: real-time fintech sync at 99.99% uptime, a logistics CRM with 75% faster invoicing, and zero downtime through a 300% edtech traffic surge.',
+    'Real DIV results: Samridhi.si for FAB5\'s CSR programme, real-time fintech sync at 99.99% uptime, a logistics CRM with 75% faster invoicing, and zero edtech downtime.',
   ogSub: 'The problem, the stack, and what changed.',
   path: '/work',
 });
@@ -21,7 +21,7 @@ export default function WorkPage() {
         eyebrow="Case studies"
         title="The problem, the stack,"
         accent="and what changed."
-        lead="Anonymised by industry at our clients' request. Every number below is measured on the running system."
+        lead="Most are anonymised by industry at our clients' request; clients are named only with their permission. Every number below is measured on the running system."
       />
       <section className="mx-auto max-w-[1320px] px-5 pt-10 sm:px-10 sm:pt-14">
         <div className="flex flex-col gap-4">
@@ -33,7 +33,7 @@ export default function WorkPage() {
               >
                 <div className="min-w-0">
                   <p className="font-mono text-[10.5px] tracking-[0.14em] text-muted uppercase">
-                    {c.industry} · {c.stack.join(' · ')}
+                    {c.client ? `${c.client} · ` : ''}{c.industry} · {c.stack.join(' · ')}
                   </p>
                   <h2 className="mt-4 text-[clamp(26px,3vw,42px)] leading-[1.06] font-medium tracking-[-0.04em] text-balance">
                     {c.title}

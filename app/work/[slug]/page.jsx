@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import InnerPage from '@/components/layout/InnerPage';
@@ -51,7 +52,11 @@ export default async function CaseStudyPage({ params }) {
     inLanguage: 'en-IN',
     author: orgRef,
     publisher: orgRef,
-    about: services.map((s) => ({ '@type': 'Service', name: s.name, url: `${siteConfig.url}/${s.slug}` })),
+    about: [
+      ...services.map((s) => ({ '@type': 'Service', name: s.name, url: `${siteConfig.url}/${s.slug}` })),
+      ...(c.liveUrl ? [{ '@type': 'WebSite', name: c.title, url: c.liveUrl, creator: orgRef }] : []),
+    ],
+    ...(c.clientLegalName ? { sourceOrganization: { '@type': 'Organization', name: c.clientLegalName, alternateName: c.client } } : {}),
     keywords: c.stack.join(', '),
   };
 
@@ -68,11 +73,19 @@ export default async function CaseStudyPage({ params }) {
       <article>
         <header className="mx-auto max-w-[1320px] px-5 pt-10 sm:px-10 sm:pt-16">
           <div className="animate-rise">
-            <Eyebrow>Case study · {c.industry}</Eyebrow>
+            <Eyebrow>Case study · {c.client ? `${c.client} · ` : ''}{c.industry}</Eyebrow>
             <h1 className="mt-6 max-w-[22ch] text-[clamp(34px,5.4vw,76px)] leading-[1] font-medium tracking-[-0.05em] text-balance">
               {c.title}
               <span className="block font-serif font-normal italic">{c.headline}</span>
             </h1>
+            {c.liveUrl ? (
+              <a
+                href={c.liveUrl}
+                className="mt-8 inline-flex items-center gap-2 rounded-full bg-ink px-5 py-3 text-[14px] font-medium text-white transition-colors hover:bg-[#2E2B36]"
+              >
+                Visit {c.liveUrl.replace('https://', '')} <span aria-hidden="true">↗</span>
+              </a>
+            ) : null}
           </div>
           <dl className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
             {c.metrics.map((m, i) => (
@@ -132,10 +145,33 @@ export default async function CaseStudyPage({ params }) {
               <Reveal as="section" className="rounded-[20px] border border-line bg-white p-6 sm:p-8">
                 <h2 className={label}>After</h2>
                 <p className="mt-4 text-[clamp(18px,1.6vw,22px)] leading-[1.5] tracking-[-0.01em] text-pretty">{c.outcome}</p>
+                {c.measured ? <p className="mt-4 text-[13px] text-muted">Measured with {c.measured}</p> : null}
               </Reveal>
             </div>
           </div>
         </div>
+
+        {c.gallery?.length ? (
+          <section aria-label="Screens" className="mx-auto max-w-[1320px] px-5 pt-16 sm:px-10 sm:pt-24">
+            <h2 className={label}>Screens</h2>
+            <div className="mt-5 grid grid-cols-1 items-start gap-4 md:grid-cols-3">
+              {c.gallery.map((g) => (
+                // Desktop screens span two columns; a phone screen sits in the third, down their rows.
+                <figure key={g.src} className={`m-0 ${g.height > g.width ? 'md:col-start-3 md:row-span-3 md:row-start-1' : 'md:col-span-2'}`}>
+                  <Image
+                    src={g.src}
+                    alt={g.alt}
+                    width={g.width}
+                    height={g.height}
+                    sizes={g.height > g.width ? '(max-width: 768px) 100vw, 420px' : '(max-width: 768px) 100vw, 860px'}
+                    className="h-auto w-full rounded-[18px] border border-line"
+                  />
+                  <figcaption className="mt-2 text-[13px] text-muted">{g.alt}</figcaption>
+                </figure>
+              ))}
+            </div>
+          </section>
+        ) : null}
       </article>
 
       <section aria-label="More case studies" className="mx-auto max-w-[1320px] px-5 pt-16 sm:px-10 sm:pt-24">

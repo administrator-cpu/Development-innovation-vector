@@ -1,4 +1,4 @@
-import { validateDetails } from '@/lib/booking';
+import { cleanText, validateDetails } from '@/lib/booking';
 import { enquiryCustomerEmail, enquiryInternalEmail, sendEmail } from '@/lib/email';
 import { clientIp, rateLimited } from '@/lib/rateLimit';
 import { siteConfig } from '@/lib/siteConfig';
@@ -20,12 +20,12 @@ export async function POST(request) {
   if (body.website) return Response.json({ ok: true }); // honeypot
 
   const q = {
-    name: String(body.name || '').trim().slice(0, 120),
-    email: String(body.email || '').trim().slice(0, 160),
-    phone: String(body.phone || '').trim().slice(0, 30),
-    company: String(body.company || '').trim().slice(0, 160),
-    topic: String(body.topic || '').trim().slice(0, 80),
-    message: String(body.message || '').trim().slice(0, 4000),
+    name: cleanText(body.name, 120),
+    email: cleanText(body.email, 160),
+    phone: cleanText(body.phone, 30),
+    company: cleanText(body.company, 160),
+    topic: cleanText(body.topic, 80),
+    message: cleanText(body.message, 4000, { multiline: true }),
   };
 
   const errors = validateDetails(q);
@@ -33,15 +33,17 @@ export async function POST(request) {
   if (body.consent !== true) errors.consent = "Please tick the box so we're allowed to reply to you.";
   if (Object.keys(errors).length) return Response.json({ ok: false, errors }, { status: 422 });
 
+  // The lead (our copy) decides success. A failed confirmation to the visitor is logged, not reported:
+  // reporting it made people resend, and we got the same enquiry twice.
   try {
-    await Promise.all([
-      sendEmail({ to: siteConfig.email, replyTo: q.email, ...enquiryInternalEmail(q) }),
-      sendEmail({ to: q.email, replyTo: siteConfig.email, ...enquiryCustomerEmail(q) }),
-    ]);
+    await sendEmail({ to: siteConfig.email, replyTo: q.email, ...enquiryInternalEmail(q) });
   } catch (err) {
     console.error('[contact] send failed', err);
     return Response.json({ ok: false, error: 'We could not send your message. Please call or WhatsApp us.' }, { status: 502 });
   }
+  await sendEmail({ to: q.email, replyTo: siteConfig.email, ...enquiryCustomerEmail(q) }).catch((err) =>
+    console.error('[contact] confirmation failed', err)
+  );
 
   return Response.json({ ok: true });
 }

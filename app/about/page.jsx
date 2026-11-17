@@ -1,3 +1,5 @@
+import { existsSync } from 'node:fs';
+import path from 'node:path';
 import Image from 'next/image';
 import InnerPage from '@/components/layout/InnerPage';
 import PageHero from '@/components/ui/PageHero';
@@ -42,13 +44,17 @@ const culture = [
   },
 ];
 
+// Shown only once the file is in public/: a missing photo was a broken image and a 404 in the Person schema.
+const FOUNDER_PHOTO = '/images/team/harsh-jha-founder-div.jpg';
+const hasFounderPhoto = existsSync(path.join(process.cwd(), 'public', FOUNDER_PHOTO));
+
 const founder = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: 'Harsh Jha',
   jobTitle: 'Founder',
   worksFor: orgRef,
-  image: `${siteConfig.url}/images/team/harsh-jha-founder-div.jpg`,
+  ...(hasFounderPhoto ? { image: `${siteConfig.url}${FOUNDER_PHOTO}` } : {}),
   url: `${siteConfig.url}/about`,
   description: 'Drives scalable API architectures and high-availability cloud deployments at DIV.',
 };
@@ -116,14 +122,23 @@ export default function AboutPage() {
           delay={0.06}
           className="mt-10 grid grid-cols-1 gap-8 rounded-[22px] border border-line bg-white p-6 sm:grid-cols-[200px_minmax(0,1fr)] sm:p-10"
         >
-          <Image
-            src="/images/team/harsh-jha-founder-div.jpg"
-            alt="Harsh Jha, founder of DIV, a software development company in Noida"
-            width={400}
-            height={400}
-            sizes="200px"
-            className="aspect-square w-full max-w-[200px] rounded-2xl bg-paper object-cover"
-          />
+          {hasFounderPhoto ? (
+            <Image
+              src={FOUNDER_PHOTO}
+              alt="Harsh Jha, founder of DIV, a software development company in Noida"
+              width={400}
+              height={400}
+              sizes="200px"
+              className="aspect-square w-full max-w-[200px] rounded-2xl bg-paper object-cover"
+            />
+          ) : (
+            <div
+              aria-hidden="true"
+              className="flex aspect-square w-full max-w-[200px] items-center justify-center rounded-2xl bg-paper font-serif text-[64px] text-muted italic"
+            >
+              HJ
+            </div>
+          )}
           <div className="min-w-0 self-center">
             <h3 className="text-[clamp(24px,2.4vw,32px)] leading-[1.1] font-medium tracking-[-0.03em]">Harsh Jha</h3>
             <p className="mt-1 font-mono text-[11px] tracking-[0.14em] text-muted uppercase">Founder</p>
