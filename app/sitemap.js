@@ -25,6 +25,10 @@ const CHANGED = {
 // Pages whose content changed after their group's date.
 const PAGE_CHANGED = {
   [`${ispProductsPath}/bharat-radius`]: '2026-11-17',
+  '/connect-crm': '2026-11-19',
+  '/connect-crm/automated-follow-up-reminders': '2026-11-19',
+  '/connect-crm/payments-and-dues': '2026-11-19',
+  '/compare/zoho-crm-vs-connect-crm': '2026-11-19',
 };
 
 export default function sitemap() {
@@ -44,6 +48,7 @@ export default function sitemap() {
     u(ispProductsPath, 'ispHub', 0.8),
     ...ispProducts.map((i) => u(`${ispProductsPath}/${i.slug}`, 'isp', i.slug === 'bharat-radius' ? 0.9 : 0.7)),
     u(bharatRadiusComparePath, 'ispHub', 0.7),
+    u('/compare/zoho-crm-vs-connect-crm', 'crm', 0.7),
     ...Object.values(crmLandings).map((l) => u(l.path, 'crm', 0.7)),
     u('/crm-development-noida', 'crm', 0.7),
     u('/blog', 'blogIndex', 0.5, 'weekly'),

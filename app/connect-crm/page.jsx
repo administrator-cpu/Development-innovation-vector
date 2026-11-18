@@ -96,6 +96,38 @@ export default function ConnectCrmPage() {
         </div>
       </section>
 
+      {p.resellers ? (
+        <section aria-labelledby="resellers" className="mx-auto max-w-[1320px] px-5 pt-16 sm:px-10 sm:pt-28">
+          <Reveal className="max-w-[820px]">
+            <h2 id="resellers" className={h2}>
+              {p.resellers.title} <span className="font-serif font-normal italic">{p.resellers.accent}</span>
+            </h2>
+            <p className="mt-4 max-w-[62ch] text-[15.5px] leading-[1.6] text-pretty text-muted">{p.resellers.lead}</p>
+          </Reveal>
+          <div className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
+            {p.resellers.items.map((it, i) => (
+              <Reveal key={it.title} as="article" delay={(i % 3) * 0.06} className="rounded-[18px] border border-line bg-white p-6 sm:p-7">
+                <h3 className="text-[17px] leading-[1.3] font-medium tracking-[-0.02em]">{it.title}</h3>
+                <p className="mt-2 text-[14.5px] leading-[1.6] text-muted">{it.body}</p>
+              </Reveal>
+            ))}
+          </div>
+          <div className="mt-6 rounded-[18px] bg-[#F3F0E9] p-6 sm:p-7">
+            <h3 className="font-mono text-[10.5px] tracking-[0.14em] text-muted uppercase">What Connect CRM does not do</h3>
+            <ul className="mt-3 flex list-disc flex-col gap-1.5 pl-5 text-[14.5px] leading-[1.6]">
+              {p.resellers.limits.map((l) => (
+                <li key={l}>{l}</li>
+              ))}
+            </ul>
+            <p className="mt-4 text-[14.5px]">
+              <Link href="/compare/zoho-crm-vs-connect-crm" className="text-ink underline underline-offset-4 hover:text-rose">
+                Comparing with Zoho CRM? Read our honest comparison →
+              </Link>
+            </p>
+          </div>
+        </section>
+      ) : null}
+
       <section className="mx-auto max-w-[1320px] px-5 pt-16 sm:px-10 sm:pt-28">
         <Reveal>
           <h2 className={h2}>

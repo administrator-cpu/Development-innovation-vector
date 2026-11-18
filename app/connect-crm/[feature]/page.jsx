@@ -4,13 +4,14 @@ import { notFound } from 'next/navigation';
 import InnerPage from '@/components/layout/InnerPage';
 import PageHero from '@/components/ui/PageHero';
 import CtaBand from '@/components/ui/CtaBand';
+import FaqList from '@/components/ui/FaqList';
 import Reveal from '@/components/motion/Reveal';
 import BookingButton from '@/components/booking/BookingButton';
 import PillButton from '@/components/ui/PillButton';
 import JsonLd from '@/components/seo/JsonLd';
 import { connectCrm, crmFeatures, crmPricing, getCrmFeature } from '@/lib/crm';
 import { siteConfig } from '@/lib/siteConfig';
-import { pageMetadata } from '@/lib/seo';
+import { faqLd, pageMetadata } from '@/lib/seo';
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -48,13 +49,16 @@ export default async function ConnectCrmFeaturePage({ params }) {
       current="/#platform"
     >
       <JsonLd
-        data={{
-          '@context': 'https://schema.org',
-          '@type': 'WebPage',
-          name: f.metaTitle,
-          url: `${siteConfig.url}${connectCrm.path}/${f.slug}`,
-          about: { '@id': `${siteConfig.url}${connectCrm.path}#software` },
-        }}
+        data={[
+          {
+            '@context': 'https://schema.org',
+            '@type': 'WebPage',
+            name: f.metaTitle,
+            url: `${siteConfig.url}${connectCrm.path}/${f.slug}`,
+            about: { '@id': `${siteConfig.url}${connectCrm.path}#software` },
+          },
+          ...(f.faq ? [faqLd(f.faq)] : []),
+        ]}
       />
       <PageHero eyebrow={`Connect CRM · ${f.name}`} title={f.title} accent={f.accent} lead={f.lead}>
         <BookingButton tone="dark" source={`connect-crm-feature:${f.slug}`}>
@@ -87,6 +91,40 @@ export default async function ConnectCrmFeaturePage({ params }) {
         </div>
       </section>
 
+      {f.automations ? (
+        <section aria-labelledby="automated" className="mx-auto max-w-[1320px] px-5 pt-16 sm:px-10 sm:pt-28">
+          <h2 id="automated" className={h2}>
+            What runs <span className="font-serif font-normal italic">automatically today</span>
+          </h2>
+          <div className="mt-8 overflow-x-auto rounded-[18px] border border-line bg-white">
+            <table className="w-full min-w-[760px] border-collapse text-left text-[14.5px]">
+              <caption className="sr-only">Connect CRM automations: trigger, action, who is told and when it runs</caption>
+              <thead>
+                <tr className="border-b border-line font-mono text-[10.5px] tracking-[0.12em] text-muted uppercase">
+                  <th scope="col" className="px-5 py-3 font-normal">Automation</th>
+                  <th scope="col" className="px-5 py-3 font-normal">When it fires</th>
+                  <th scope="col" className="px-5 py-3 font-normal">What it does</th>
+                  <th scope="col" className="px-5 py-3 font-normal">Who</th>
+                  <th scope="col" className="px-5 py-3 font-normal">Schedule</th>
+                </tr>
+              </thead>
+              <tbody>
+                {f.automations.map((a) => (
+                  <tr key={a.name} className="border-b border-line align-top last:border-0">
+                    <th scope="row" className="px-5 py-4 font-medium">{a.name}</th>
+                    <td className="px-5 py-4 text-muted">{a.trigger}</td>
+                    <td className="px-5 py-4 text-muted">{a.action}</td>
+                    <td className="px-5 py-4 text-muted">{a.who}</td>
+                    <td className="px-5 py-4 text-muted">{a.when}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {f.notYet ? <p className="mt-5 max-w-[75ch] text-[14.5px] leading-[1.65] text-muted">{f.notYet}</p> : null}
+        </section>
+      ) : null}
+
       <section className="px-3 pt-16 sm:px-4 sm:pt-28">
         <div className="mx-auto max-w-[1400px] rounded-[20px] bg-navy px-5 py-14 text-white sm:rounded-[26px] sm:px-10 sm:py-20 lg:px-16">
           <Reveal className="max-w-[760px]">
@@ -97,6 +135,8 @@ export default async function ConnectCrmFeaturePage({ params }) {
           </Reveal>
         </div>
       </section>
+
+      {f.faq ? <FaqList items={f.faq} title="Questions" accent="about reminders" /> : null}
 
       <section className="mx-auto max-w-[1320px] px-5 pt-16 sm:px-10 sm:pt-28">
         <h2 className="text-[clamp(22px,2.4vw,32px)] leading-[1.1] font-medium tracking-[-0.03em]">More in Connect CRM</h2>
