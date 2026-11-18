@@ -16,6 +16,7 @@ export function GET() {
   const svc = services.map((s) => `- [${s.name}](${abs(`/${s.slug}`)}): ${s.metaDescription}`).join('\n');
   const posts = blogPosts.map((p) => `- [${p.title}](${abs(`/blog/${p.slug}`)}): ${p.metaDescription}`).join('\n');
   const prices = crmPricing.lines.map((l) => `- ${l.label}: ${l.value} ${l.unit} + GST. ${l.body}`).join('\n');
+  const crmFaq = connectCrm.faq.map((f) => `### ${f.q}\n\n${f.a}`).join('\n\n');
   const brFaq = bharatRadiusFaqs.map((f) => `### ${f.q}\n\n${f.a}`).join('\n\n');
 
   const body = `# ${siteConfig.name} (${siteConfig.legalName})
@@ -32,6 +33,10 @@ ${isp}
 - [daloRADIUS alternative: Bharat Radius compared](${abs(bharatRadiusComparePath)}): Bharat Radius vs FreeRADIUS + daloRADIUS vs Excel billing, and when each fits.
 - [Bharat Radius product site](${bharatRadiusSite}): demo booking and staff/customer logins.
 
+## Connect CRM: key facts
+
+${crmFaq}
+
 ## Bharat Radius: key facts
 
 ${brFaq}
@@ -40,6 +45,8 @@ ${brFaq}
 
 - [Custom CRM development in Delhi NCR](${abs(crmHub.path)}): ${crmHub.metaDescription}
 - [Connect CRM pricing](${abs(crmPricing.path)}): prices as of ${crmPricing.checked}.
+- [Connect CRM automated reminders](${abs(`${connectCrm.path}/automated-follow-up-reminders`)}): exactly what runs automatically today, and what does not.
+- [Zoho CRM vs Connect CRM](${abs('/compare/zoho-crm-vs-connect-crm')}): an honest comparison for ISPs and telecom resellers, including where Zoho is stronger.
 
 ${prices}
 
